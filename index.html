@@ -20,7 +20,10 @@
 
   <main>
     <p data-lang-key="welcome">Добро пожаловать в лучшую академию для изучения корейского языка!</p>
+    
     <a href="lessons/lesson1.html" class="start-btn" data-lang-key="start">🚀 Начать учиться</a>
+    <br />
+    <a href="lessons/lesson2.html" class="start-btn lesson2-btn" style="background-color:#2196F3; margin-top: 10px;">📘 Урок 2: Согласные</a>
   </main>
 
   <footer>
@@ -28,5 +31,43 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script>
+    // Расширим скрипт для перевода кнопки Урок 2
+    const translations = {
+      ru: {
+        title: "Shuhrat Korean Academy",
+        welcome: "Добро пожаловать в лучшую академию для изучения корейского языка!",
+        start: "🚀 Начать учиться",
+        lesson2: "📘 Урок 2: Согласные"
+      },
+      en: {
+        title: "Shuhrat Korean Academy",
+        welcome: "Welcome to the best academy for learning Korean!",
+        start: "🚀 Start Learning",
+        lesson2: "📘 Lesson 2: Consonants"
+      },
+      ko: {
+        title: "슈흐랏 한국 아카데미",
+        welcome: "한국어를 배우기에 최고의 아카데미에 오신 것을 환영합니다!",
+        start: "🚀 학습 시작",
+        lesson2: "📘 2과: 자음"
+      }
+    };
+
+    const langButtons = document.querySelectorAll(".lang-btn");
+    const elementsToTranslate = document.querySelectorAll("[data-lang-key]");
+    const lesson2Btn = document.querySelector(".lesson2-btn");
+
+    langButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        elementsToTranslate.forEach(el => {
+          const key = el.getAttribute("data-lang-key");
+          el.textContent = translations[lang][key];
+        });
+        if (lesson2Btn) lesson2Btn.textContent = translations[lang].lesson2;
+      });
+    });
+  </script>
 </body>
 </html>
