@@ -2,171 +2,92 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SKA — Учите корейский шаг за шагом!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SKA — Учите корейский с нуля</title>
   <style>
-    :root {
-      --main-gradient: linear-gradient(135deg, #3a8dff, #8e54e9);
-      --text-light: #ffffff;
-      --text-dark: #1e1e1e;
-      --transition: all 0.3s ease;
-    }
-    * {
+    /* Фон — градиент */
+    body {
       margin: 0;
-      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
       box-sizing: border-box;
     }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: var(--main-gradient);
-      color: var(--text-light);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+
+    .main-block {
+      max-width: 600px;
     }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-    }
-    .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    nav ul {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-    nav a {
-      text-decoration: none;
-      color: var(--text-light);
-      font-weight: 500;
-      transition: var(--transition);
-    }
-    nav a:hover {
-      color: #ffe28a;
-    }
-    .lang-switcher {
-      display: flex;
-      gap: 0.5rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      user-select: none;
-    }
-    .lang-switcher span:hover {
-      transform: scale(1.2);
-      transition: var(--transition);
-    }
-    .hero {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
-    .hero h1 {
+
+    h1 {
       font-size: 3rem;
-      margin-bottom: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
     }
-    .hero p {
-      font-size: 1.4rem;
-      margin-bottom: 2rem;
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      opacity: 0.85;
     }
-    .cta {
-      padding: 0.8rem 1.5rem;
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 15px 30px;
       font-size: 1.1rem;
-      background-color: #ffffff;
-      color: #3a8dff;
-      border: none;
-      border-radius: 8px;
+      border-radius: 40px;
       cursor: pointer;
-      transition: var(--transition);
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-decoration: none;
+      user-select: none;
+      min-width: 150px;
     }
-    .cta:hover {
-      background-color: #ffe28a;
-      color: #000;
+
+    .btn:hover {
+      background-color: #fff;
+      color: #764ba2;
+      border-color: #764ba2;
     }
-    footer {
-      padding: 1rem;
-      text-align: center;
-      background-color: rgba(0, 0, 0, 0.2);
-      font-size: 0.9rem;
-    }
-    @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .hero h1 {
+
+    @media (max-width: 480px) {
+      h1 {
         font-size: 2.2rem;
       }
-      .hero p {
-        font-size: 1.1rem;
+
+      .btn {
+        min-width: 100%;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 15px;
       }
     }
   </style>
 </head>
 <body style="background: url('images/bgrd.jpg') no-repeat center center / cover;">
-  
-
-  <header>
-    <div class="logo" data-lang-ru="SKA" data-lang-en="SKA" data-lang-ko="SKA">SKA</div>
-    <nav>
-      <ul>
-        <li><a href="#" data-lang-ru="Главная" data-lang-en="Home" data-lang-ko="홈">Главная</a></li>
-        <li><a href="#" data-lang-ru="Уроки" data-lang-en="Lessons" data-lang-ko="강의">Уроки</a></li>
-        <li><a href="#" data-lang-ru="Тесты" data-lang-en="Tests" data-lang-ko="시험">Тесты</a></li>
-        <li><a href="#" data-lang-ru="Словарь" data-lang-en="Dictionary" data-lang-ko="사전">Словарь</a></li>
-        <li><a href="#" data-lang-ru="О нас" data-lang-en="About Us" data-lang-ko="회사 소개">О нас</a></li>
-        <li><a href="#" data-lang-ru="Контакты" data-lang-en="Contact" data-lang-ko="연락처">Контакты</a></li>
-      </ul>
-    </nav>
-    <div class="lang-switcher">
-      <span onclick="setLang('ru')" title="Русский">🇷🇺</span>
-      <span onclick="setLang('en')" title="English">en</span>
-      <span onclick="setLang('ko')" title="한국어">🇰🇷</span>
+  <div class="main-block">
+    <h1>Учите корейский с нуля — шаг за шагом!</h1>
+    <p>Добро пожаловать в SKA — ваш надежный помощник в изучении корейского языка. Уроки, тесты, словарь и многое другое.</p>
+    <div class="buttons">
+      <a href="lessons/lesson1.html" class="btn">Начать уроки</a>
+      <a href="tests.html" class="btn">Посмотреть тесты</a>
+      <a href="about.html" class="btn">Узнать больше</a>
     </div>
-  </header>
-
-  <main class="hero">
-    <h1 data-lang-ru="Учите корейский с нуля — шаг за шагом!"
-        data-lang-en="Learn Korean from scratch — step by step!"
-        data-lang-ko="처음부터 한국어를 단계별로 배우세요!">Учите корейский с нуля — шаг за шагом!</h1>
-    <p data-lang-ru="Погрузитесь в язык и культуру Кореи с помощью наших интерактивных уроков и тестов."
-       data-lang-en="Immerse yourself in the Korean language and culture with our interactive lessons and tests."
-       data-lang-ko="인터랙티브 강의와 테스트로 한국어와 문화를 경험하세요.">
-      Погрузитесь в язык и культуру Кореи с помощью наших интерактивных уроков и тестов.
-    </p>
-    <button class="cta" onclick="location.href='lessons/lesson1.html'" 
-            data-lang-ru="Начать обучение"
-            data-lang-en="Start Learning"
-            data-lang-ko="학습 시작">
-      Начать обучение
-    </button>
-  </main>
-
-  <footer>
-    <p data-lang-ru="© 2025 SKA. Все права защищены."
-       data-lang-en="© 2025 SKA. All rights reserved."
-       data-lang-ko="© 2025 SKA. 판권 소유.">
-      © 2025 SKA. Все права защищены.
-    </p>
-  </footer>
-
-  <script>
-    function setLang(lang) {
-      document.querySelectorAll('[data-lang-' + lang + ']').forEach(el => {
-        el.textContent = el.getAttribute('data-lang-' + lang);
-      });
-      document.documentElement.lang = lang;
-    }
-  </script>
+  </div>
 </body>
 </html>
