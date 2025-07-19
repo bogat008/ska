@@ -1,57 +1,170 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SKA Korean — Учим корейский легко</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SKA — Учите корейский шаг за шагом!</title>
+  <style>
+    :root {
+      --main-gradient: linear-gradient(135deg, #3a8dff, #8e54e9);
+      --text-light: #ffffff;
+      --text-dark: #1e1e1e;
+      --transition: all 0.3s ease;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--main-gradient);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    nav a:hover {
+      color: #ffe28a;
+    }
+    .lang-switcher {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+    .lang-switcher span:hover {
+      transform: scale(1.2);
+      transition: var(--transition);
+    }
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+    }
+    .cta {
+      padding: 0.8rem 1.5rem;
+      font-size: 1.1rem;
+      background-color: #ffffff;
+      color: #3a8dff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .cta:hover {
+      background-color: #ffe28a;
+      color: #000;
+    }
+    footer {
+      padding: 1rem;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.2);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 text-gray-800">
-
-  <!-- Навигация -->
-  <header class="bg-white shadow-md">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-blue-600">SKA Korean</h1>
-      <nav class="space-x-4 text-sm md:text-base">
-        <a href="index.html" class="hover:text-blue-600">Главная</a>
-        <a href="lesson1.html" class="hover:text-blue-600">Урок 1</a>
-        <a href="#" class="hover:text-blue-600">Словарь</a>
-        <a href="#" class="hover:text-blue-600">Тесты</a>
-        <a href="#" class="hover:text-blue-600">О проекте</a>
-      </nav>
+<body>
+  <header>
+    <div class="logo" data-lang-ru="SKA" data-lang-en="SKA" data-lang-ko="SKA">SKA</div>
+    <nav>
+      <ul>
+        <li><a href="#" data-lang-ru="Главная" data-lang-en="Home" data-lang-ko="홈">Главная</a></li>
+        <li><a href="#" data-lang-ru="Уроки" data-lang-en="Lessons" data-lang-ko="강의">Уроки</a></li>
+        <li><a href="#" data-lang-ru="Тесты" data-lang-en="Tests" data-lang-ko="시험">Тесты</a></li>
+        <li><a href="#" data-lang-ru="Словарь" data-lang-en="Dictionary" data-lang-ko="사전">Словарь</a></li>
+        <li><a href="#" data-lang-ru="О нас" data-lang-en="About Us" data-lang-ko="회사 소개">О нас</a></li>
+        <li><a href="#" data-lang-ru="Контакты" data-lang-en="Contact" data-lang-ko="연락처">Контакты</a></li>
+      </ul>
+    </nav>
+    <div class="lang-switcher">
+      <span onclick="setLang('ru')" title="Русский">🇷🇺</span>
+      <span onclick="setLang('en')" title="English">en</span>
+      <span onclick="setLang('ko')" title="한국어">🇰🇷</span>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="text-center py-20 px-4 bg-blue-100">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4">Добро пожаловать в SKA Korean</h2>
-    <p class="text-lg md:text-xl mb-8">Изучай корейский язык с нуля — легко, современно и эффективно!</p>
-    <a href="lesson1.html" class="bg-blue-600 text-white px-6 py-3 rounded-xl text-lg hover:bg-blue-700 transition">Начать с урока 1</a>
-  </section>
+  <main class="hero">
+    <h1 data-lang-ru="Учите корейский с нуля — шаг за шагом!"
+        data-lang-en="Learn Korean from scratch — step by step!"
+        data-lang-ko="처음부터 한국어를 단계별로 배우세요!">Учите корейский с нуля — шаг за шагом!</h1>
+    <p data-lang-ru="Погрузитесь в язык и культуру Кореи с помощью наших интерактивных уроков и тестов."
+       data-lang-en="Immerse yourself in the Korean language and culture with our interactive lessons and tests."
+       data-lang-ko="인터랙티브 강의와 테스트로 한국어와 문화를 경험하세요.">
+      Погрузитесь в язык и культуру Кореи с помощью наших интерактивных уроков и тестов.
+    </p>
+    <button class="cta" onclick="location.href='lessons/lesson1.html'" 
+            data-lang-ru="Начать обучение"
+            data-lang-en="Start Learning"
+            data-lang-ko="학습 시작">
+      Начать обучение
+    </button>
+  </main>
 
-  <!-- Разделы -->
-  <section class="bg-white py-16 px-6">
-    <h3 class="text-3xl font-bold mb-10 text-center">Разделы сайта</h3>
-    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h4 class="text-xl font-semibold mb-2">📘 Уроки</h4>
-        <p>Пошаговые уроки по алфавиту, грамматике, словам и культуре Кореи.</p>
-      </div>
-      <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h4 class="text-xl font-semibold mb-2">📖 Словарь</h4>
-        <p>Полезные слова, произношение, примеры и транскрипция.</p>
-      </div>
-      <div class="bg-blue-50 p-6 rounded-xl shadow hover:shadow-lg transition">
-        <h4 class="text-xl font-semibold mb-2">📝 Тесты</h4>
-        <p>Интерактивные задания и проверка знаний для закрепления.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Футер -->
-  <footer class="bg-gray-800 text-white py-8 text-center">
-    <p>© 2025 SKA Korean. Все права защищены. Сделано Акаем ❤️</p>
+  <footer>
+    <p data-lang-ru="© 2025 SKA. Все права защищены."
+       data-lang-en="© 2025 SKA. All rights reserved."
+       data-lang-ko="© 2025 SKA. 판권 소유.">
+      © 2025 SKA. Все права защищены.
+    </p>
   </footer>
 
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang-' + lang + ']').forEach(el => {
+        el.textContent = el.getAttribute('data-lang-' + lang);
+      });
+      document.documentElement.lang = lang;
+    }
+  </script>
 </body>
 </html>
