@@ -9,11 +9,12 @@ body {
 }
 
 body {
-  background-image: url('https://chatgpt.com/s/m_687bd47ab47c8191998b15a588151631');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-image: url('bgrd.jpg');
+  background-size: cover; /* чтобы фон заполнил весь экран */
+  background-position: center center; /* центрирование фона */
+  background-repeat: no-repeat; /* не повторять изображение */
 }
+
 
 
 /* Шапка */
