@@ -8,6 +8,14 @@ body {
   color: #333;
 }
 
+body {
+  background-image: url('https://cdn.pixabay.com/photo/2021/07/10/08/24/watercolor-6399763_1280.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
 /* Шапка */
 header {
   background: #0066cc;
