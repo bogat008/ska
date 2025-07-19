@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shuhrat Korean Academy — Главная</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    function switchLanguage(lang) {
+      document.querySelectorAll("[data-lang]").forEach(el => {
+        el.textContent = el.getAttribute("data-lang-" + lang);
+      });
+    }
+    // Инициализация по умолчанию
+    document.addEventListener("DOMContentLoaded", () => {
+      switchLanguage('ru');
+    });
+  </script>
+</head>
+<body>
+  <header>
+  <h1 data-lang data-lang-ru="Shuhrat Korean Academy" data-lang-en="Shuhrat Korean Academy" data-lang-ko="슈흐랏 한국 아카데미">
+    Shuhrat Korean Academy
+  </h1>
+
+  <button id="burger-btn" aria-label="Toggle menu">☰</button>
+
+  <nav id="nav-menu">
+    <ul>
+      <li><a href="index.html" data-lang data-lang-ru="Главная" data-lang-en="Home" data-lang-ko="홈">Главная</a></li>
+      <li><a href="about.html" data-lang data-lang-ru="О нас" data-lang-en="About" data-lang-ko="소개">О нас</a></li>
+      <li><a href="contact.html" data-lang data-lang-ru="Контакты" data-lang-en="Contact" data-lang-ko="문의">Контакты</a></li>
+    </ul>
+    <div class="lang-buttons">
+      <button onclick="switchLanguage('ru')">RU</button>
+      <button onclick="switchLanguage('en')">EN</button>
+      <button onclick="switchLanguage('ko')">KO</button>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <h2 data-lang data-lang-ru="Список уроков" data-lang-en="Lesson List" data-lang-ko="강의 목록">Список уроков</h2>
+    <ul>
+      <!-- Цикл для уроков -->
+      <li><a href="lessons/lesson1.html" data-lang data-lang-ru="Урок 1" data-lang-en="Lesson 1" data-lang-ko="제 1 과">Урок 1</a></li>
+      <li><a href="lessons/lesson2.html" data-lang data-lang-ru="Урок 2" data-lang-en="Lesson 2" data-lang-ko="제 2 과">Урок 2</a></li>
+      <li><a href="lessons/lesson3.html" data-lang data-lang-ru="Урок 3" data-lang-en="Lesson 3" data-lang-ko="제 3 과">Урок 3</a></li>
+      <li><a href="lessons/lesson4.html" data-lang data-lang-ru="Урок 4" data-lang-en="Lesson 4" data-lang-ko="제 4 과">Урок 4</a></li>
+      <li><a href="lessons/lesson5.html" data-lang data-lang-ru="Урок 5" data-lang-en="Lesson 5" data-lang-ko="제 5 과">Урок 5</a></li>
+      <li><a href="lessons/lesson6.html" data-lang data-lang-ru="Урок 6" data-lang-en="Lesson 6" data-lang-ko="제 6 과">Урок 6</a></li>
+      <li><a href="lessons/lesson7.html" data-lang data-lang-ru="Урок 7" data-lang-en="Lesson 7" data-lang-ko="제 7 과">Урок 7</a></li>
+      <li><a href="lessons/lesson8.html" data-lang data-lang-ru="Урок 8" data-lang-en="Lesson 8" data-lang-ko="제 8 과">Урок 8</a></li>
+      <li><a href="lessons/lesson9.html" data-lang data-lang-ru="Урок 9" data-lang-en="Lesson 9" data-lang-ko="제 9 과">Урок 9</a></li>
+      <li><a href="lessons/lesson10.html" data-lang data-lang-ru="Урок 10" data-lang-en="Lesson 10" data-lang-ko="제 10 과">Урок 10</a></li>
+      <li><a href="lessons/lesson11.html" data-lang data-lang-ru="Урок 11" data-lang-en="Lesson 11" data-lang-ko="제 11 과">Урок 11</a></li>
+      <li><a href="lessons/lesson12.html" data-lang data-lang-ru="Урок 12" data-lang-en="Lesson 12" data-lang-ko="제 12 과">Урок 12</a></li>
+      <li><a href="lessons/lesson13.html" data-lang data-lang-ru="Урок 13" data-lang-en="Lesson 13" data-lang-ko="제 13 과">Урок 13</a></li>
+      <li><a href="lessons/lesson14.html" data-lang data-lang-ru="Урок 14" data-lang-en="Lesson 14" data-lang-ko="제 14 과">Урок 14</a></li>
+      <li><a href="lessons/lesson15.html" data-lang data-lang-ru="Урок 15" data-lang-en="Lesson 15" data-lang-ko="제 15 과">Урок 15</a></li>
+      <li><a href="lessons/lesson16.html" data-lang data-lang-ru="Урок 16" data-lang-en="Lesson 16" data-lang-ko="제 16 과">Урок 16</a></li>
+      <li><a href="lessons/lesson17.html" data-lang data-lang-ru="Урок 17" data-lang-en="Lesson 17" data-lang-ko="제 17 과">Урок 17</a></li>
+      <li><a href="lessons/lesson18.html" data-lang data-lang-ru="Урок 18" data-lang-en="Lesson 18" data-lang-ko="제 18 과">Урок 18</a></li>
+      <li><a href="lessons/lesson19.html" data-lang data-lang-ru="Урок 19" data-lang-en="Lesson 19" data-lang-ko="제 19 과">Урок 19</a></li>
+      <li><a href="lessons/lesson20.html" data-lang data-lang-ru="Урок 20" data-lang-en="Lesson 20" data-lang-ko="제 20 과">Урок 20</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>© 2025 Shuhrat Korean Academy</p>
+  </footer>
+    <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const burgerBtn = document.getElementById('burger-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    burgerBtn.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  });
+</script>
+
+</body>
+</html>
