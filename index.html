@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SKA — Учите корейский с нуля</title>
+
+  <!-- Подключение Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <style>
-    /* Фон — градиент */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
       color: #fff;
       height: 100vh;
       display: flex;
@@ -18,10 +20,55 @@
       text-align: center;
       padding: 0 20px;
       box-sizing: border-box;
+      position: relative;
+      background: url('images/bgrd.jpg') no-repeat center center / cover;
+      overflow-x: hidden;
+    }
+
+    .lang-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .lang-switcher button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    .lang-switcher button:hover,
+    .lang-switcher button.active {
+      background-color: #fff;
+      color: #764ba2;
     }
 
     .main-block {
-      max-width: 600px;
+      max-width: 700px;
+      user-select: none;
+      background: rgba(0, 0, 0, 0.38);
+      padding: 30px 25px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     h1 {
@@ -30,10 +77,57 @@
       line-height: 1.2;
     }
 
-    p {
-      font-size: 1.2rem;
+    p.description {
+      font-size: 1.3rem;
       margin-bottom: 40px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 50px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .feature-item {
+      flex: 1 1 180px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      color: #fff;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .feature-icon {
+      font-family: 'Material Icons';
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-text {
+      font-size: 1rem;
       opacity: 0.85;
+      line-height: 1.4;
     }
 
     .buttons {
@@ -41,6 +135,10 @@
       gap: 20px;
       justify-content: center;
       flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 1.2s;
     }
 
     .btn {
@@ -63,11 +161,18 @@
       border-color: #764ba2;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 768px) {
       h1 {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
       }
 
+      .feature-item {
+        flex: 1 1 100%;
+        --delay: 0s !important;
+      }
+    }
+
+    @media (max-width: 480px) {
       .btn {
         min-width: 100%;
       }
@@ -79,15 +184,84 @@
     }
   </style>
 </head>
-<body style="background: url('images/bgrd.jpg') no-repeat center center / cover;">
+<body>
+  <!-- Переключатель языков -->
+  <div class="lang-switcher" aria-label="Выбор языка">
+    <button class="active" data-lang="ru">Рус</button>
+    <button data-lang="en">Eng</button>
+    <button data-lang="ko">한글</button>
+  </div>
+
   <div class="main-block">
-    <h1>Учите корейский с нуля — шаг за шагом!</h1>
-    <p>Добро пожаловать в SKA — ваш надежный помощник в изучении корейского языка. Уроки, тесты, словарь и многое другое.</p>
+    <h1 data-lang-ru="Учите корейский с нуля — шаг за шагом!"
+        data-lang-en="Learn Korean from scratch — step by step!"
+        data-lang-ko="처음부터 한국어를 배우세요 — 단계별로!">Учите корейский с нуля — шаг за шагом!</h1>
+
+    <p class="description"
+       data-lang-ru="Добро пожаловать в SKA — ваш надежный помощник в изучении корейского языка. Уроки, тесты, словарь и многое другое."
+       data-lang-en="Welcome to SKA — your reliable helper in learning Korean. Lessons, tests, dictionary, and much more."
+       data-lang-ko="SKA에 오신 것을 환영합니다 — 한국어 학습을 위한 믿을 수 있는 도우미입니다. 수업, 테스트, 사전 등 다양한 콘텐츠가 있습니다.">
+      Добро пожаловать в SKA — ваш надежный помощник в изучении корейского языка. Уроки, тесты, словарь и многое другое.
+    </p>
+
+    <div class="features">
+      <div class="feature-item" style="--delay: 0s;">
+        <div class="feature-icon" aria-hidden="true">menu_book</div>
+        <div class="feature-title" data-lang-ru="Полные уроки" data-lang-en="Complete Lessons" data-lang-ko="완전한 수업">Полные уроки</div>
+        <div class="feature-text" data-lang-ru="Изучайте корейский язык с подробными уроками от новичка до продвинутого."
+             data-lang-en="Learn Korean with detailed lessons from beginner to advanced."
+             data-lang-ko="초보자부터 고급까지 자세한 수업으로 한국어를 배우세요.">Изучайте корейский язык с подробными уроками от новичка до продвинутого.</div>
+      </div>
+      <div class="feature-item" style="--delay: 0.3s;">
+        <div class="feature-icon" aria-hidden="true">assignment</div>
+        <div class="feature-title" data-lang-ru="Тесты и практика" data-lang-en="Tests and Practice" data-lang-ko="테스트와 연습">Тесты и практика</div>
+        <div class="feature-text" data-lang-ru="Проверяйте свои знания с помощью интерактивных тестов."
+             data-lang-en="Check your knowledge with interactive tests."
+             data-lang-ko="인터랙티브 테스트로 지식을 점검하세요.">Проверяйте свои знания с помощью интерактивных тестов.</div>
+      </div>
+      <div class="feature-item" style="--delay: 0.6s;">
+        <div class="feature-icon" aria-hidden="true">menu_book</div>
+        <div class="feature-title" data-lang-ru="Словарь" data-lang-en="Dictionary" data-lang-ko="사전">Словарь</div>
+        <div class="feature-text" data-lang-ru="Удобный словарь с поиском и примерами."
+             data-lang-en="Convenient dictionary with search and examples."
+             data-lang-ko="검색 및 예제가 포함된 편리한 사전입니다.">Удобный словарь с поиском и примерами.</div>
+      </div>
+    </div>
+
     <div class="buttons">
-      <a href="lessons/lesson1.html" class="btn">Начать уроки</a>
-      <a href="tests.html" class="btn">Посмотреть тесты</a>
-      <a href="about.html" class="btn">Узнать больше</a>
+      <a href="lessons/lesson1.html" class="btn" data-lang-ru="Начать уроки" data-lang-en="Start Lessons" data-lang-ko="수업 시작">Начать уроки</a>
+      <a href="tests.html" class="btn" data-lang-ru="Посмотреть тесты" data-lang-en="View Tests" data-lang-ko="테스트 보기">Посмотреть тесты</a>
+      <a href="about.html" class="btn" data-lang-ru="Узнать больше" data-lang-en="Learn More" data-lang-ko="더 알아보기">Узнать больше</a>
     </div>
   </div>
+
+  <script>
+    const langButtons = document.querySelectorAll('.lang-switcher button');
+    const elementsToTranslate = document.querySelectorAll('[data-lang-ru]');
+
+    function setLanguage(lang) {
+      elementsToTranslate.forEach(el => {
+        const text = el.getAttribute(`data-lang-${lang}`);
+        if (text) {
+          el.textContent = text;
+        }
+      });
+      langButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+      localStorage.setItem('siteLanguage', lang);
+    }
+
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedLang = button.getAttribute('data-lang');
+        setLanguage(selectedLang);
+      });
+    });
+
+    // Загружаем язык из localStorage или по умолчанию русский
+    const savedLang = localStorage.getItem('siteLanguage') || 'ru';
+    setLanguage(savedLang);
+  </script>
 </body>
 </html>
