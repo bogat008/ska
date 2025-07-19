@@ -1,50 +1,82 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>О нас - SKA</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script>
-        function switchLanguage(lang) {
-            const texts = document.querySelectorAll("[data-lang]");
-            texts.forEach(el => {
-                el.textContent = el.getAttribute("data-lang-" + lang);
-            });
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-lang-ru="О проекте" data-lang-en="About the Project" data-lang-ko="프로젝트 소개">О проекте</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      border: 2px solid #fff;
+      border-radius: 30px;
+      color: #fff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #fff;
+      color: #764ba2;
+      border-color: #764ba2;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1 data-lang data-lang-ru="Shuhrat Korean Academy" data-lang-en="Shuhrat Korean Academy" data-lang-ko="슈흐랏 한국 아카데미">
-    Shuhrat Korean Academy
-  </h1>
-
-  <button id="burger-btn" aria-label="Toggle menu">☰</button>
-
-  <nav id="nav-menu">
-    <ul>
-      <li><a href="index.html" data-lang data-lang-ru="Главная" data-lang-en="Home" data-lang-ko="홈">Главная</a></li>
-      <li><a href="about.html" data-lang data-lang-ru="О нас" data-lang-en="About" data-lang-ko="소개">О нас</a></li>
-      <li><a href="contact.html" data-lang data-lang-ru="Контакты" data-lang-en="Contact" data-lang-ko="문의">Контакты</a></li>
-    </ul>
-    <div class="lang-buttons">
-      <button onclick="switchLanguage('ru')">RU</button>
-      <button onclick="switchLanguage('en')">EN</button>
-      <button onclick="switchLanguage('ko')">KO</button>
-    </div>
-  </nav>
-</header>
-<main>
-    <p data-lang
-       data-lang-ru="Shuhrat Korean Academy (SKA) — это онлайн-платформа для изучения корейского языка шаг за шагом."
-       data-lang-en="Shuhrat Korean Academy (SKA) is an online platform to learn Korean step by step."
-       data-lang-ko="Shuhrat Korean Academy(SKA)는 단계별로 한국어를 배우는 온라인 플랫폼입니다.">
-       Shuhrat Korean Academy (SKA) — это онлайн-платформа для изучения корейского языка шаг за шагом.
+  <div class="container">
+    <h1 data-lang-ru="О проекте" data-lang-en="About the Project" data-lang-ko="프로젝트 소개">О проекте</h1>
+    <p data-lang-ru="Этот сайт создан для всех, кто хочет выучить корейский язык с нуля. Мы предоставляем пошаговые уроки, тесты, словарь и практику — всё в одном месте!"
+       data-lang-en="This site is created for everyone who wants to learn Korean from scratch. We offer step-by-step lessons, tests, vocabulary and practice — all in one place!"
+       data-lang-ko="이 사이트는 한국어를 처음부터 배우고자 하는 모든 사람들을 위해 만들어졌습니다. 단계별 수업, 테스트, 단어장 및 연습 기능이 모두 포함되어 있습니다.">
+       Этот сайт создан для всех, кто хочет выучить корейский язык с нуля. Мы предоставляем пошаговые уроки, тесты, словарь и практику — всё в одном месте!
     </p>
-</main>
-<footer>
-    <p>© 2025 Shuhrat Korean Academy</p>
-</footer>
+    <p data-lang-ru="Наша цель — сделать изучение корейского языка доступным, увлекательным и эффективным для каждого."
+       data-lang-en="Our goal is to make learning Korean accessible, fun and effective for everyone."
+       data-lang-ko="우리의 목표는 한국어 학습을 누구에게나 쉽고 재미있으며 효과적으로 만드는 것입니다.">
+       Наша цель — сделать изучение корейского языка доступным, увлекательным и эффективным для каждого.
+    </p>
+    <p data-lang-ru="Проект разработан с душой, специально для таких людей, как вы."
+       data-lang-en="This project was built with love — especially for learners like you."
+       data-lang-ko="이 프로젝트는 여러분과 같은 학습자를 위해 진심을 담아 만들었습니다.">
+       Проект разработан с душой, специально для таких людей, как вы.
+    </p>
+    <p data-lang-ru="Автор проекта: Акаи Шухрат"
+       data-lang-en="Project creator: Akai Shukhrat"
+       data-lang-ko="프로젝트 제작자: 아카이 슈흐랏">
+       Автор проекта: Акаи Шухрат
+    </p>
+    <a href="index.html" class="back-btn" data-lang-ru="Назад на главную" data-lang-en="Back to Home" data-lang-ko="홈으로 돌아가기">Назад на главную</a>
+  </div>
 </body>
 </html>
