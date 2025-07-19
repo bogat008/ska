@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Контакты - Shuhrat Korean Academy</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    function switchLanguage(lang) {
+      document.querySelectorAll("[data-lang]").forEach(el => {
+        el.textContent = el.getAttribute("data-lang-" + lang);
+      });
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+      switchLanguage('ru');
+    });
+  </script>
+</head>
+<body>
+  <header>
+  <h1 data-lang data-lang-ru="Shuhrat Korean Academy" data-lang-en="Shuhrat Korean Academy" data-lang-ko="슈흐랏 한국 아카데미">
+    Shuhrat Korean Academy
+  </h1>
+
+  <button id="burger-btn" aria-label="Toggle menu">☰</button>
+
+  <nav id="nav-menu">
+    <ul>
+      <li><a href="index.html" data-lang data-lang-ru="Главная" data-lang-en="Home" data-lang-ko="홈">Главная</a></li>
+      <li><a href="about.html" data-lang data-lang-ru="О нас" data-lang-en="About" data-lang-ko="소개">О нас</a></li>
+      <li><a href="contact.html" data-lang data-lang-ru="Контакты" data-lang-en="Contact" data-lang-ko="문의">Контакты</a></li>
+    </ul>
+    <div class="lang-buttons">
+      <button onclick="switchLanguage('ru')">RU</button>
+      <button onclick="switchLanguage('en')">EN</button>
+      <button onclick="switchLanguage('ko')">KO</button>
+    </div>
+  </nav>
+</header>
+
+  <main>
+    <h2 data-lang data-lang-ru="Свяжитесь с нами" data-lang-en="Get in touch" data-lang-ko="문의하기">Свяжитесь с нами</h2>
+    <p data-lang data-lang-ru="Email: info@shahratkoreanacademy.com" data-lang-en="Email: info@shahratkoreanacademy.com" data-lang-ko="이메일: info@shahratkoreanacademy.com">
+      Email: info@shahratkoreanacademy.com
+    </p>
+    <p data-lang data-lang-ru="Телефон: +7 123 456 7890" data-lang-en="Phone: +7 123 456 7890" data-lang-ko="전화: +7 123 456 7890">
+      Телефон: +7 123 456 7890
+    </p>
+
+    <form action="https://formcarry.com/s/YOUR_FORM_ID" method="POST" style="max-width: 500px; margin-top: 30px;">
+      <label for="name" data-lang data-lang-ru="Ваше имя" data-lang-en="Your Name" data-lang-ko="이름">Ваше имя:</label><br />
+      <input type="text" id="name" name="name" required style="width: 100%; padding: 8px; margin-bottom: 15px;" /><br />
+
+      <label for="email" data-lang data-lang-ru="Ваш Email" data-lang-en="Your Email" data-lang-ko="이메일">Ваш Email:</label><br />
+      <input type="email" id="email" name="email" required style="width: 100%; padding: 8px; margin-bottom: 15px;" /><br />
+
+      <label for="message" data-lang data-lang-ru="Сообщение" data-lang-en="Message" data-lang-ko="메시지">Сообщение:</label><br />
+      <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 8px; margin-bottom: 15px;"></textarea><br />
+
+      <button type="submit" style="background-color: #0052cc; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;"
+              data-lang data-lang-ru="Отправить" data-lang-en="Send" data-lang-ko="보내기">
+        Отправить
+      </button>
+    </form>
+  </main>
+  <footer>
+    <p>© 2025 Shuhrat Korean Academy</p>
+  </footer>
+</body>
+</html>

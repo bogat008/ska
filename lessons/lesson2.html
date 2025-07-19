@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title data-lang-ru="Урок 2 — Согласные корейского языка"
+       data-lang-en="Lesson 2 — Korean Consonants"
+       data-lang-ko="제2과 — 한국어 자음">Урок 2 — Согласные корейского языка</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 10px;
+    background: #fafafa;
+    color: #222;
+  }
+  h1, h2 {
+    color: #0066cc;
+  }
+  .consonants-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(60px,1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .consonant-box {
+    background: #dceeff;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 0 5px #a0c4ff;
+    transition: background-color 0.3s ease;
+  }
+  .consonant-box:hover {
+    background-color: #a8d0ff;
+  }
+  .pronunciation {
+    font-style: italic;
+    color: #555;
+    margin-top: 5px;
+  }
+  .info-block {
+    background: #e3f0ff;
+    border-left: 5px solid #3a99d8;
+    padding: 15px 20px;
+    margin: 20px 0;
+    font-size: 1.1em;
+  }
+  .test-section {
+    background: #d7f0d9;
+    border: 2px solid #3ca63a;
+    padding: 20px;
+    border-radius: 6px;
+  }
+  label {
+    display: block;
+    margin: 15px 0 5px;
+  }
+  input[type="text"] {
+    width: 100%;
+    font-size: 1em;
+    padding: 8px;
+    border: 2px solid #3ca63a;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    margin-top: 15px;
+    background-color: #3ca63a;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #2f8b2f;
+  }
+  #result {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  .lang-switch {
+    margin-bottom: 25px;
+  }
+  .lang-switch button {
+    background-color: #bbb;
+    border: none;
+    margin-right: 10px;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  .lang-switch button.active {
+    background-color: #3ca63a;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<div class="lang-switch" aria-label="Language switcher">
+  <button data-lang="ru" class="active">Русский</button>
+  <button data-lang="en">English</button>
+  <button data-lang="ko">한국어</button>
+</div>
+
+<h1 data-lang-ru="Урок 2 — Согласные корейского языка"
+    data-lang-en="Lesson 2 — Korean Consonants"
+    data-lang-ko="제2과 — 한국어 자음">Урок 2 — Согласные корейского языка</h1>
+
+<div class="info-block" data-lang-ru="В этом уроке познакомимся с основными корейскими согласными — простыми и двойными. Выучим их произношение и потренируемся."
+     data-lang-en="In this lesson, we learn the main Korean consonants — simple and double. We practice their pronunciation."
+     data-lang-ko="이 과에서는 기본 자음과 쌍자음을 배우고 발음을 연습합니다.">
+  В этом уроке познакомимся с основными корейскими согласными — простыми и двойными. Выучим их произношение и потренируемся.
+</div>
+
+<h2 data-lang-ru="Основные согласные"
+    data-lang-en="Basic consonants"
+    data-lang-ko="기본 자음">Основные согласные</h2>
+
+<div class="consonants-grid" aria-label="Basic consonants">
+  <div class="consonant-box" tabindex="0" data-sound="g/k">
+    ㄱ<div class="pronunciation" data-lang-ru="гиёк" data-lang-en="giyeok" data-lang-ko="기역">гиёк</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="n">
+    ㄴ<div class="pronunciation" data-lang-ru="ниын" data-lang-en="nieun" data-lang-ko="니은">ниын</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="d/t">
+    ㄷ<div class="pronunciation" data-lang-ru="тигыт" data-lang-en="digeut" data-lang-ko="디귿">тигыт</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="r/l">
+    ㄹ<div class="pronunciation" data-lang-ru="риыль" data-lang-en="rieul" data-lang-ko="리을">риыль</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="m">
+    ㅁ<div class="pronunciation" data-lang-ru="миым" data-lang-en="mieum" data-lang-ko="미음">миым</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="b/p">
+    ㅂ<div class="pronunciation" data-lang-ru="пиып" data-lang-en="bieup" data-lang-ko="비읍">пиып</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="s">
+    ㅅ<div class="pronunciation" data-lang-ru="сиот" data-lang-en="siot" data-lang-ko="시옷">сиот</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="ng/silent">
+    ㅇ<div class="pronunciation" data-lang-ru="иын" data-lang-en="ieung" data-lang-ko="이응">иын</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="j/ch">
+    ㅈ<div class="pronunciation" data-lang-ru="чиыт" data-lang-en="jieut" data-lang-ko="지읒">чиыт</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="ch">
+    ㅊ<div class="pronunciation" data-lang-ru="чиыт (ударный)" data-lang-en="chieut" data-lang-ko="치읓">чиыт (ударный)</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="k (hard)">
+    ㅋ<div class="pronunciation" data-lang-ru="хиык" data-lang-en="kieuk" data-lang-ko="키읔">хиык</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="t (hard)">
+    ㅌ<div class="pronunciation" data-lang-ru="тиыт" data-lang-en="tieut" data-lang-ko="티읕">тиыт</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="p (hard)">
+    ㅍ<div class="pronunciation" data-lang-ru="пиып (ударный)" data-lang-en="pieup" data-lang-ko="피읖">пиып (ударный)</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="h">
+    ㅎ<div class="pronunciation" data-lang-ru="хиыт" data-lang-en="hieut" data-lang-ko="히읗">хиыт</div>
+  </div>
+</div>
+
+<h2 data-lang-ru="Двойные согласные (쌍자음)"
+    data-lang-en="Double consonants (Ssangjaeum)"
+    data-lang-ko="쌍자음">Двойные согласные (쌍자음)</h2>
+
+<div class="consonants-grid" aria-label="Double consonants">
+  <div class="consonant-box" tabindex="0" data-sound="kk">
+    ㄲ<div class="pronunciation" data-lang-ru="ссангиёк" data-lang-en="ssanggiyeok" data-lang-ko="쌍기역">ссангиёк</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="tt">
+    ㄸ<div class="pronunciation" data-lang-ru="ссантигыт" data-lang-en="ssangdigeut" data-lang-ko="쌍디귿">ссантигыт</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="pp">
+    ㅃ<div class="pronunciation" data-lang-ru="ссанпиып" data-lang-en="ssangbieup" data-lang-ko="쌍비읍">ссанпиып</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="ss">
+    ㅆ<div class="pronunciation" data-lang-ru="ссансиот" data-lang-en="ssangsiot" data-lang-ko="쌍시옷">ссансиот</div>
+  </div>
+  <div class="consonant-box" tabindex="0" data-sound="jj">
+    ㅉ<div class="pronunciation" data-lang-ru="ссанчиыт" data-lang-en="ssangjieut" data-lang-ko="쌍지읒">ссанчиыт</div>
+  </div>
+</div>
+
+<div class="info-block" data-lang-ru="Нажмите на любую букву, чтобы увидеть, как она звучит (в будущем можно добавить звук)."
+     data-lang-en="Click on any letter to see how it sounds (sound can be added later)."
+     data-lang-ko="글자를 클릭하면 발음을 확인할 수 있습니다 (나중에 음성을 추가할 수 있습니다)."></div>
+
+<h2 data-lang-ru="Практические упражнения"
+    data-lang-en="Practice Exercises"
+    data-lang-ko="연습 문제"></h2>
+
+<div class="test-section" aria-label="Practice test">
+  <form id="test2">
+    <label for="answer1" data-lang-ru="1. Напишите двойную согласную, которая звучит как 'ss':" data-lang-en="1. Write the double consonant that sounds like 'ss':" data-lang-ko="1. 'ss' 소리 쌍자음을 쓰세요:"></label>
+    <input id="answer1" name="answer1" type="text" autocomplete="off" />
+
+    <label for="answer2" data-lang-ru="2. Какая буква произносится как 'ng' в конце слога?" data-lang-en="2. Which letter is pronounced as 'ng' at the end of a syllable?" data-lang-ko="2. 음절 끝에서 'ng'로 발음되는 자음은?"></label>
+    <input id="answer2" name="answer2" type="text" autocomplete="off" />
+
+    <label for="answer3" data-lang-ru="3. Как называется буква ㄷ?" data-lang-en="3. What is the name of the letter ㄷ?" data-lang-ko="3. ㄷ 자음의 이름은?"></label>
+    <input id="answer3" name="answer3" type="text" autocomplete="off" />
+
+    <button type="button" onclick="checkTest()">Проверить</button>
+  </form>
+  <div id="testResult"></div>
+</div>
+
+<script>
+  // Language switcher
+  const langButtons = document.querySelectorAll('.lang-switch button');
+  const allLangElems = document.querySelectorAll('[data-lang-ru]');
+  let lang = 'ru';
+
+  langButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      langButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      lang = btn.dataset.lang;
+      allLangElems.forEach(el => {
+        el.textContent = el.dataset[`lang${lang.toUpperCase()}`];
+      });
+      // Reset results on lang switch
+      document.getElementById('testResult').textContent = '';
+    });
+  });
+  allLangElems.forEach(el => {
+    el.textContent = el.dataset.langRU;
+  });
+
+  // Test checker
+  function checkTest() {
+    const ans1 = document.getElementById('answer1').value.trim().toLowerCase();
+    const ans2 = document.getElementById('answer2').value.trim();
+    const ans3 = document.getElementById('answer3').value.trim().toLowerCase();
+
+    let score = 0, total = 3;
+    // Accept variations:
+    if (ans1 === 'ㅆ' || ans1 === 'ss' || ans1 === 'сс' || ans1 === 'ссансиот') score++;
+    if (ans2 === 'ㅇ' || ans2.toLowerCase() === 'ieung' || ans2 === 'иын') score++;
+    if (ans3 === 'тигыт' || ans3 === 'digeut' || ans3 === 'ㄷ' || ans3 === 'тигыт' || ans3 === '디귿') score++;
+
+    let resultMsg;
+    if(lang==='ru'){
+      resultMsg = `Вы ответили правильно на ${score} из ${total} вопросов.`;
+    } else if(lang==='en'){
+      resultMsg = `You answered correctly on ${score} out of ${total} questions.`;
+    } else {
+      resultMsg = `총 ${total}문제 중 ${score}문제를 맞추셨습니다.`;
+    }
+
+    document.getElementById('testResult').textContent = resultMsg;
+  }
+</script>
+</body>
+</html>
