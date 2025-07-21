@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Урок 5 — Путешествия и транспорт</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #1e3c72;
+      margin-bottom: 30px;
+    }
+    .exercise {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+      color: #1e3c72;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      transition: background-color 0.3s;
+    }
+    input.correct {
+      background-color: #d4edda;
+      border-color: #28a745;
+    }
+    input.incorrect {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    button {
+      background-color: #1e3c72;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 0 10px 20px 10px;
+      border-radius: 10px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover:not(:disabled) {
+      background-color: #16305c;
+    }
+    button:disabled {
+      background-color: #b0b0b0;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h1>Урок 5 — Путешествия и транспорт</h1>
+  <div id="exercises"></div>
+
+  <div class="btn-container">
+    <button id="checkBtn" onclick="checkAnswers()">Проверить ответы</button>
+    <button id="showBtn" onclick="showAnswers()" disabled>Показать правильные ответы</button>
+    <br>
+    <button onclick="location.href='tests.html'">Назад на главную</button>
+    <button onclick="alert('Следующий урок в разработке')">Следующий урок</button>
+  </div>
+
+  <script>
+    const questions = [
+      { q: '1. Как по-корейски «автобус»?', a: '버스' },
+      { q: '2. Как по-корейски «метро»?', a: '지하철' },
+      { q: '3. Как по-корейски «такси»?', a: '택시' },
+      { q: '4. Как по-корейски «самолёт»?', a: '비행기' },
+      { q: '5. Как по-корейски «вокзал»?', a: '역' },
+      { q: '6. Как по-корейски «аэропорт»?', a: '공항' },
+      { q: '7. Как по-корейски «билет»?', a: '표' },
+      { q: '8. Как по-корейски «поезд»?', a: '기차' },
+      { q: '9. Как по-корейски «путешествие»?', a: '여행' },
+      { q: '10. Как по-корейски «багаж»?', a: '짐' },
+      { q: '11. Как по-корейски «пассажир»?', a: '승객' },
+      { q: '12. Как по-корейски «водитель»?', a: '운전사' },
+      { q: '13. Как по-корейски «турист»?', a: '관광객' },
+      { q: '14. Как по-корейски «регистрация» (в аэропорту)?', a: '체크인' },
+      { q: '15. Как по-корейски «посадка»?', a: '탑승' },
+      { q: '16. Как по-корейски «отправление»?', a: '출발' },
+      { q: '17. Как по-корейски «прибытие»?', a: '도착' },
+      { q: '18. Как по-корейски «пункт назначения»?', a: '목적지' },
+      { q: '19. Как по-корейски «переезд»?', a: '환승' },
+      { q: '20. Как по-корейски «карта проезда»?', a: '노선도' }
+    ];
+
+    const container = document.getElementById('exercises');
+
+    questions.forEach(({q}, i) => {
+      const div = document.createElement('div');
+      div.className = 'exercise';
+      div.innerHTML = `
+        <label for="q${i}">${q}</label>
+        <input type="text" id="q${i}" />
+      `;
+      container.appendChild(div);
+    });
+
+    const checkBtn = document.getElementById('checkBtn');
+    const showBtn = document.getElementById('showBtn');
+
+    function checkAnswers() {
+      let allAnswered = true;
+      let correctCount = 0;
+      questions.forEach(({a}, i) => {
+        const input = document.getElementById(`q${i}`);
+        const userAnswer = input.value.trim();
+        if (!userAnswer) allAnswered = false;
+        if (userAnswer === a) {
+          input.classList.add('correct');
+          input.classList.remove('incorrect');
+          correctCount++;
+        } else {
+          input.classList.add('incorrect');
+          input.classList.remove('correct');
+        }
+      });
+      if (!allAnswered) {
+        alert('Пожалуйста, ответьте на все вопросы перед проверкой.');
+        return;
+      }
+      alert(`Вы правильно ответили на ${correctCount} из ${questions.length} вопросов.`);
+      showBtn.disabled = false;
+    }
+
+    function showAnswers() {
+      questions.forEach(({a}, i) => {
+        const input = document.getElementById(`q${i}`);
+        input.value = a;
+        input.classList.remove('incorrect');
+        input.classList.add('correct');
+      });
+      showBtn.disabled = true;
+    }
+  </script>
+</body>
+</html>
