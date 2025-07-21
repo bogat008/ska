@@ -1,0 +1,212 @@
+<!DOCTYPE html> 
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Практика — Урок 1: Приветствие</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f8fbff, #dbe9f4);
+      color: #333;
+    }
+    header {
+      background: #2c5364;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 960px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #204051;
+    }
+    .exercise {
+      margin: 25px 0;
+    }
+    label, p {
+      font-size: 1.1em;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #2c5364;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      margin: 10px 5px 0 0;
+    }
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    button:hover:enabled {
+      background: #1b3748;
+    }
+    .lang-toggle {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .lang-toggle button {
+      margin-left: 5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .answers {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      color: #333;
+    }
+    .warning-note {
+      color: red;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 data-lang="ru">Урок 1: Приветствие — 익힘책</h1>
+    <h1 data-lang="en" style="display:none;">Lesson 1: Greetings — Practice</h1>
+    <h1 data-lang="ko" style="display:none;">제1과: 인사하기 — 익힘책</h1>
+  </header>
+
+  <div class="container">
+    <div class="lang-toggle">
+      <button onclick="setLang('ru')">RU</button>
+      <button onclick="setLang('en')">EN</button>
+      <button onclick="setLang('ko')">KO</button>
+    </div>
+
+    <div class="warning-note" id="warningNote">
+      ⚠️ Внимание! Не нажимайте на кнопку "Показать правильные ответы", пока не ввели все ответы.
+    </div>
+
+    <section class="exercise"><h2>1. Вставьте подходящее приветствие</h2><p>안녕하세요! 저는 민수예요. _____?</p><input type="text" id="q1" class="answer-input"></section>
+    <section class="exercise"><h2>2. Как по-корейски сказать “Меня зовут Алекс”?</h2><input type="text" id="q2" class="answer-input"></section>
+    <section class="exercise"><h2>3. Как вы попрощаетесь формально?</h2><input type="text" id="q3" class="answer-input"></section>
+    <section class="exercise"><h2>4. Переведите на корейский: «Доброе утро»</h2><input type="text" id="q4" class="answer-input"></section>
+    <section class="exercise"><h2>5. Как сказать «Рад встрече» на корейском?</h2><input type="text" id="q5" class="answer-input"></section>
+    <section class="exercise"><h2>6. Какая форма приветствия используется днём?</h2><input type="text" id="q6" class="answer-input"></section>
+    <section class="exercise"><h2>7. Переведите: «До свидания» (если вы уходите)</h2><input type="text" id="q7" class="answer-input"></section>
+    <section class="exercise"><h2>8. Переведите: «До свидания» (если собеседник уходит)</h2><input type="text" id="q8" class="answer-input"></section>
+    <section class="exercise"><h2>9. Переведите: «Спасибо» вежливо</h2><input type="text" id="q9" class="answer-input"></section>
+    <section class="exercise"><h2>10. Как спросить: «Как вас зовут?»</h2><input type="text" id="q10" class="answer-input"></section>
+
+    <button onclick="checkAnswers()">Проверить ответы</button>
+    <button id="showAnswersBtn" onclick="handleShowAnswers()" disabled>Показать правильные ответы</button>
+    <div class="result" id="result"></div>
+
+    <div class="answers" id="answers">
+      <h3>Правильные ответы:</h3>
+      <ol>
+        <li>만나서 반갑습니다</li>
+        <li>제 이름은 Alex입니다</li>
+        <li>안녕히 가세요 / 안녕히 계세요</li>
+        <li>좋은 아침입니다</li>
+        <li>만나서 반갑습니다</li>
+        <li>안녕하세요</li>
+        <li>안녕히 계세요</li>
+        <li>안녕히 가세요</li>
+        <li>감사합니다</li>
+        <li>성함이 어떻게 되세요? / 이름이 뭐예요?</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === lang ? 'block' : 'none';
+      });
+    }
+
+    function checkAnswers() {
+      const answers = {
+        q1: ["만나서 반갑습니다", "반갑습니다"],
+        q2: ["제 이름은 알렉스입니다", "제 이름은 Alex입니다"],
+        q3: ["안녕히 가세요", "안녕히 계세요"],
+        q4: ["좋은 아침입니다"],
+        q5: ["만나서 반갑습니다"],
+        q6: ["안녕하세요"],
+        q7: ["안녕히 계세요"],
+        q8: ["안녕히 가세요"],
+        q9: ["감사합니다"],
+        q10: ["성함이 어떻게 되세요?", "이름이 뭐예요?"]
+      };
+      let score = 0;
+      let feedback = "";
+
+      for (let key in answers) {
+        const val = document.getElementById(key).value.trim();
+        if (answers[key].some(a => val.includes(a))) {
+          score++;
+        } else {
+          feedback += `\n${key.replace("q", "Вопрос ")} неверно.`;
+        }
+      }
+
+      const result = document.getElementById("result");
+      result.textContent = score === 10 ? "Отлично! Все ответы верны." : `Вы набрали ${score}/10.${feedback}`;
+      result.style.color = score === 10 ? "green" : "red";
+    }
+
+    function handleShowAnswers() {
+      if (!checkAllFilled()) {
+        alert("Сначала заполните все ответы перед просмотром правильных.");
+        return;
+      }
+      document.getElementById("answers").style.display = "block";
+    }
+
+    function checkAllFilled() {
+      const inputs = document.querySelectorAll('.answer-input');
+      for (let input of inputs) {
+        if (input.value.trim() === '') return false;
+      }
+      return true;
+    }
+
+    const inputs = document.querySelectorAll('.answer-input');
+    const showBtn = document.getElementById("showAnswersBtn");
+    const warningNote = document.getElementById("warningNote");
+
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        if (checkAllFilled()) {
+          showBtn.disabled = false;
+          warningNote.style.display = 'none';
+        } else {
+          showBtn.disabled = true;
+          warningNote.style.display = 'block';
+        }
+      });
+    });
+
+    setLang('ru');
+  </script>
+</body>
+</html>
