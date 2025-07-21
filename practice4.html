@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Урок 4 — Семья и родственные связи</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    .word-list, .exercise {
+      background: #ffffff;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 800px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .check-btn { background-color: #2ecc71; color: white; }
+    .show-btn:disabled { background-color: #ccc; color: #666; cursor: not-allowed; }
+    .show-btn:enabled { background-color: #3498db; color: white; }
+    .nav-btn { background-color: #9b59b6; color: white; }
+    .correct { background-color: #d4edda; }
+    .incorrect { background-color: #f8d7da; }
+  </style>
+</head>
+<body>
+  <h1>Урок 4 — Семья и родственные связи (가족과 친척)</h1>
+
+  <div class="word-list">
+    <h2>Словарь</h2>
+    <ul>
+      <li>엄마 — мама</li>
+      <li>아빠 — папа</li>
+      <li>형 — старший брат (для мальчика)</li>
+      <li>오빠 — старший брат (для девочки)</li>
+      <li>누나 — старшая сестра (для мальчика)</li>
+      <li>언니 — старшая сестра (для девочки)</li>
+      <li>남동생 — младший брат</li>
+      <li>여동생 — младшая сестра</li>
+      <li>할아버지 — дедушка</li>
+      <li>할머니 — бабушка</li>
+    </ul>
+  </div>
+
+  <div class="exercise">
+    <h2>Упражнения</h2>
+    <ol>
+      <li>엄마 — <input type="text" data-answer="мама"></li>
+      <li>아빠 — <input type="text" data-answer="папа"></li>
+      <li>형 — <input type="text" data-answer="старший брат"></li>
+      <li>오빠 — <input type="text" data-answer="старший брат"></li>
+      <li>누나 — <input type="text" data-answer="старшая сестра"></li>
+      <li>언니 — <input type="text" data-answer="старшая сестра"></li>
+      <li>남동생 — <input type="text" data-answer="младший брат"></li>
+      <li>여동생 — <input type="text" data-answer="младшая сестра"></li>
+      <li>할아버지 — <input type="text" data-answer="дедушка"></li>
+      <li>할머니 — <input type="text" data-answer="бабушка"></li>
+      <li>Как по-корейски «мама»? <input type="text" data-answer="엄마"></li>
+      <li>Как по-корейски «дедушка»? <input type="text" data-answer="할아버지"></li>
+      <li>Как по-корейски «младший брат»? <input type="text" data-answer="남동생"></li>
+      <li>Как по-корейски «старшая сестра (для девочки)»? <input type="text" data-answer="언니"></li>
+      <li>Как по-корейски «старший брат (для мальчика)»? <input type="text" data-answer="형"></li>
+    </ol>
+
+    <button class="check-btn" onclick="checkAnswers()">Проверить ответы</button>
+    <button class="show-btn" id="showAnswersBtn" onclick="showAnswers()" disabled>Показать правильные ответы</button>
+    <br><br>
+    <button class="nav-btn" onclick="location.href='tests.html'">Назад на главную</button>
+    <button class="nav-btn" onclick="location.href='practice5.html'">Следующий урок</button>
+  </div>
+
+  <script>
+    function checkAnswers() {
+      const inputs = document.querySelectorAll('input[type="text"]');
+      let allFilled = true;
+      inputs.forEach(input => {
+        const answer = input.dataset.answer.trim().toLowerCase();
+        const user = input.value.trim().toLowerCase();
+        if (!user) allFilled = false;
+        if (user === answer) {
+          input.classList.remove("incorrect");
+          input.classList.add("correct");
+        } else {
+          input.classList.remove("correct");
+          input.classList.add("incorrect");
+        }
+      });
+      if (allFilled) {
+        document.getElementById("showAnswersBtn").disabled = false;
+      }
+    }
+
+    function showAnswers() {
+      const inputs = document.querySelectorAll('input[type="text"]');
+      inputs.forEach(input => {
+        input.value = input.dataset.answer;
+        input.classList.remove("incorrect");
+        input.classList.add("correct");
+      });
+    }
+  </script>
+</body>
+</html>
