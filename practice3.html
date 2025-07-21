@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Урок 3 — Числа и счёт</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      padding: 20px;
+    }
+    h1 {
+      color: #003366;
+      text-align: center;
+    }
+    .exercise {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 700px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      width: 90%;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+    #checkBtn, #showAnswersBtn {
+      display: block;
+      margin: 30px auto 10px;
+    }
+    #showAnswersBtn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .answer {
+      color: green;
+      display: none;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Урок 3 — Числа и счёт</h1>
+
+<div class="exercise"><b>1.</b> Напишите корейское слово для цифры "1": <br><input type="text" data-answer="하나" /></div>
+<div class="exercise"><b>2.</b> Напишите китайское число "2": <br><input type="text" data-answer="이" /></div>
+<div class="exercise"><b>3.</b> Напишите корейское число "3": <br><input type="text" data-answer="셋" /></div>
+<div class="exercise"><b>4.</b> Напишите китайское число "4": <br><input type="text" data-answer="사" /></div>
+<div class="exercise"><b>5.</b> Напишите корейское число "5": <br><input type="text" data-answer="다섯" /></div>
+<div class="exercise"><b>6.</b> Напишите китайское число "6": <br><input type="text" data-answer="육" /></div>
+<div class="exercise"><b>7.</b> Напишите корейское число "7": <br><input type="text" data-answer="일곱" /></div>
+<div class="exercise"><b>8.</b> Напишите китайское число "8": <br><input type="text" data-answer="팔" /></div>
+<div class="exercise"><b>9.</b> Напишите корейское число "9": <br><input type="text" data-answer="아홉" /></div>
+<div class="exercise"><b>10.</b> Напишите китайское число "10": <br><input type="text" data-answer="십" /></div>
+<div class="exercise"><b>11.</b> Сколько лет вам? (используя корейские числа): <br><input type="text" data-answer="스물다섯 살" /></div>
+<div class="exercise"><b>12.</b> Сколько сейчас времени? (пример: 3 часа): <br><input type="text" data-answer="세 시" /></div>
+<div class="exercise"><b>13.</b> Сколько стоит? (пример: 1000 вон): <br><input type="text" data-answer="천 원" /></div>
+<div class="exercise"><b>14.</b> Сколько предметов? (5 штук): <br><input type="text" data-answer="다섯 개" /></div>
+<div class="exercise"><b>15.</b> Сколько человек? (2 человека): <br><input type="text" data-answer="두 명" /></div>
+
+<button id="checkBtn">Проверить ответы</button>
+<button id="showAnswersBtn" disabled>Показать правильные ответы</button>
+
+<div class="nav-buttons">
+  <button onclick="location.href='tests.html'">← Назад на главную</button>
+  <button onclick="location.href='practice4.html'">Следующий урок →</button>
+</div>
+
+<script>
+  const checkBtn = document.getElementById("checkBtn");
+  const showAnswersBtn = document.getElementById("showAnswersBtn");
+
+  checkBtn.onclick = () => {
+    const inputs = document.querySelectorAll("input[type='text']");
+    let allAnswered = true;
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        allAnswered = false;
+      }
+    });
+
+    if (!allAnswered) {
+      alert("Пожалуйста, ответьте на все вопросы.");
+      return;
+    }
+
+    inputs.forEach(input => {
+      const correct = input.dataset.answer;
+      if (input.value.trim() === correct) {
+        input.style.borderColor = "green";
+      } else {
+        input.style.borderColor = "red";
+      }
+    });
+
+    showAnswersBtn.disabled = false;
+  };
+
+  showAnswersBtn.onclick = () => {
+    const inputs = document.querySelectorAll("input[type='text']");
+    inputs.forEach(input => {
+      const correct = input.dataset.answer;
+      if (input.value.trim() !== correct) {
+        input.value = correct;
+        input.style.borderColor = "blue";
+      }
+    });
+  };
+</script>
+
+</body>
+</html>
