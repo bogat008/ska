@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Урок 2 — Еда и напитки: Упражнения</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #c0392b;
+      margin-bottom: 30px;
+    }
+    .exercise {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    button {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      margin: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover:not(:disabled) {
+      background-color: #c0392b;
+    }
+    button:disabled {
+      background-color: #ccc;
+      cursor: default;
+    }
+    .note {
+      color: red;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .correct {
+      background-color: #d4edda;
+    }
+    .incorrect {
+      background-color: #f8d7da;
+    }
+  </style>
+</head>
+<body>
+  <h1>Урок 2 — Еда и напитки: Упражнения</h1>
+  <div class="note">Важно: Ответьте на все 15 вопросов перед тем как нажать «Показать правильные ответы».</div>
+
+  <div id="exercises"></div>
+
+  <div class="btn-container">
+    <button onclick="checkAnswers()">Проверить ответы</button>
+    <button id="showAnswersBtn" disabled onclick="showCorrectAnswers()">Показать правильные ответы</button>
+    <br />
+    <button onclick="location.href='tests.html'">Назад в главную</button>
+    <button onclick=""location.href='practice3.html'">Следующий тест</button>
+  </div>
+
+  <script>
+    const questions = [
+      { q: '1. Как по-корейски "вода"?', a: '물' },
+      { q: '2. Как по-корейски "рис (варёный)"?', a: '밥' },
+      { q: '3. Как по-корейски "яблоко"?', a: '사과' },
+      { q: '4. Как по-корейски "молоко"?', a: '우유' },
+      { q: '5. Как по-корейски "хлеб"?', a: '빵' },
+      { q: '6. Как по-корейски "чай"?', a: '차' },
+      { q: '7. Как по-корейски "суп"?', a: '국' },
+      { q: '8. Как по-корейски "кофе"?', a: '커피' },
+      { q: '9. Как по-корейски "мясо"?', a: '고기' },
+      { q: '10. Как по-корейски "яйцо"?', a: '계란' },
+      { q: '11. Как по-корейски "рыба"?', a: '생선' },
+      { q: '12. Как по-корейски "овощи"?', a: '야채' },
+      { q: '13. Как по-корейски "банан"?', a: '바나나' },
+      { q: '14. Как по-корейски "апельсин"?', a: '오렌지' },
+      { q: '15. Как по-корейски "вкусный"?', a: '맛있다' },
+    ];
+
+    const container = document.getElementById('exercises');
+    questions.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'exercise';
+      div.innerHTML = `
+        <label>${item.q}</label>
+        <input type="text" id="q${index}" oninput="checkAllFilled()" />
+      `;
+      container.appendChild(div);
+    });
+
+    function checkAllFilled() {
+      const allFilled = questions.every((_, index) => {
+        const val = document.getElementById(`q${index}`).value.trim();
+        return val !== '';
+      });
+      document.getElementById('showAnswersBtn').disabled = !allFilled;
+    }
+
+    function checkAnswers() {
+      questions.forEach((item, index) => {
+        const input = document.getElementById(`q${index}`);
+        if (input.value.trim() === item.a) {
+          input.classList.add('correct');
+          input.classList.remove('incorrect');
+        } else {
+          input.classList.add('incorrect');
+          input.classList.remove('correct');
+        }
+      });
+    }
+
+    function showCorrectAnswers() {
+      questions.forEach((item, index) => {
+        const input = document.getElementById(`q${index}`);
+        if (input.value.trim() !== item.a) {
+          input.value = `${input.value.trim()} → ${item.a}`;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
