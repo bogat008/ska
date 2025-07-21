@@ -1,265 +1,565 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title data-lang-ru="Урок 2 — Согласные корейского языка"
-       data-lang-en="Lesson 2 — Korean Consonants"
-       data-lang-ko="제2과 — 한국어 자음">Урок 2 — Согласные корейского языка</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 10px;
-    background: #fafafa;
-    color: #222;
-  }
-  h1, h2 {
-    color: #0066cc;
-  }
-  .consonants-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(60px,1fr));
-    gap: 15px;
-    margin: 20px 0;
-  }
-  .consonant-box {
-    background: #dceeff;
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    font-size: 24px;
-    cursor: pointer;
-    user-select: none;
-    box-shadow: 0 0 5px #a0c4ff;
-    transition: background-color 0.3s ease;
-  }
-  .consonant-box:hover {
-    background-color: #a8d0ff;
-  }
-  .pronunciation {
-    font-style: italic;
-    color: #555;
-    margin-top: 5px;
-  }
-  .info-block {
-    background: #e3f0ff;
-    border-left: 5px solid #3a99d8;
-    padding: 15px 20px;
-    margin: 20px 0;
-    font-size: 1.1em;
-  }
-  .test-section {
-    background: #d7f0d9;
-    border: 2px solid #3ca63a;
-    padding: 20px;
-    border-radius: 6px;
-  }
-  label {
-    display: block;
-    margin: 15px 0 5px;
-  }
-  input[type="text"] {
-    width: 100%;
-    font-size: 1em;
-    padding: 8px;
-    border: 2px solid #3ca63a;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  button {
-    margin-top: 15px;
-    background-color: #3ca63a;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #2f8b2f;
-  }
-  #result {
-    margin-top: 15px;
-    font-weight: bold;
-  }
-  .lang-switch {
-    margin-bottom: 25px;
-  }
-  .lang-switch button {
-    background-color: #bbb;
-    border: none;
-    margin-right: 10px;
-    padding: 8px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  .lang-switch button.active {
-    background-color: #3ca63a;
-    color: white;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Урок 2 — Корейский язык: грамматика и выражения (расширенный)</title>
+  <style>
+    /* Базовые стили */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: rgba(27, 72, 231, 0.82);
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+    }
+    header {
+      margin-bottom: 20px;
+    }
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    nav.lang-switch {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    nav.lang-switch button {
+      background: #3c74e7;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      margin: 0 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    nav.lang-switch button.active,
+    nav.lang-switch button:hover {
+      background: #452bc0;
+    }
+    section[data-lang] {
+      display: none;
+      text-align: left;
+    }
+    section[data-lang].active {
+      display: block;
+    }
+    ul {
+      margin-left: 1.2em;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1em;
+      margin-bottom: 2em;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px 15px;
+      text-align: center;
+    }
+    th {
+      background-color: #d9e2f7;
+      color: #2665a9;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      padding: 0 10px;
+    }
+    .nav-buttons button {
+      background: #3c66e7;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+    .nav-buttons button:hover {
+      background: #2e2bc0;
+    }
+    /* Дополнительные стили для акцентов */
+    .highlight {
+      background-color: #e5effc;
+      padding: 8px 15px;
+      border-left: 5px solid #533ce7;
+      margin: 15px 0;
+      font-weight: 700;
+      color: #26a957;
+    }
+    blockquote {
+      font-style: italic;
+      color: #555;
+      margin-left: 20px;
+      border-left: 4px solid #e74c3c;
+      padding-left: 10px;
+    }
+  </style>
 </head>
 <body>
-<div class="lang-switch" aria-label="Language switcher">
-  <button data-lang="ru" class="active">Русский</button>
-  <button data-lang="en">English</button>
-  <button data-lang="ko">한국어</button>
-</div>
+  <header>
+    <h1>Урок 2 — Корейский язык: грамматика и выражения (расширенный)</h1>
+  </header>
 
-<h1 data-lang-ru="Урок 2 — Согласные корейского языка"
-    data-lang-en="Lesson 2 — Korean Consonants"
-    data-lang-ko="제2과 — 한국어 자음">Урок 2 — Согласные корейского языка</h1>
+  <nav class="lang-switch" aria-label="Переключение языка урока">
+    <button data-lang-btn="ru" class="active" aria-pressed="true" aria-label="Русский">RU</button>
+    <button data-lang-btn="en" aria-pressed="false" aria-label="Английский">EN</button>
+    <button data-lang-btn="ko" aria-pressed="false" aria-label="Корейский">KO</button>
+  </nav>
 
-<div class="info-block" data-lang-ru="В этом уроке познакомимся с основными корейскими согласными — простыми и двойными. Выучим их произношение и потренируемся."
-     data-lang-en="In this lesson, we learn the main Korean consonants — simple and double. We practice their pronunciation."
-     data-lang-ko="이 과에서는 기본 자음과 쌍자음을 배우고 발음을 연습합니다.">
-  В этом уроке познакомимся с основными корейскими согласными — простыми и двойными. Выучим их произношение и потренируемся.
-</div>
+  <main>
+    <!-- Русский -->
+    <section data-lang="ru" class="active" aria-label="Содержание урока на русском">
+      <h2>📚 Основные грамматические конструкции</h2>
+      <p>В корейском языке очень важна правильная связка и грамматические окончания, чтобы выразить смысл и уровень вежливости. Вот ключевые формы связки «быть» и их использование:</p>
+      <ul>
+        <li><strong>이에요 / 예요</strong> — разговорная вежливая форма связки «быть». Используется после существительных.</li>
+        <li><strong>입니다</strong> — официальная и формальная форма связки «быть», применяется в официальных выступлениях, документах, и новостях.</li>
+        <li><strong>아니에요</strong> — отрицательная форма, «не является».</li>
+        <li><strong>이에요? / 예요?</strong> — вопросительная форма, чтобы спросить «Это ... ?»</li>
+      </ul>
 
-<h2 data-lang-ru="Основные согласные"
-    data-lang-en="Basic consonants"
-    data-lang-ko="기본 자음">Основные согласные</h2>
+      <div class="highlight">Пример: <br>저는 학생이에요. (Я — студент.)<br>이것은 책이에요? (Это книга?)</div>
 
-<div class="consonants-grid" aria-label="Basic consonants">
-  <div class="consonant-box" tabindex="0" data-sound="g/k">
-    ㄱ<div class="pronunciation" data-lang-ru="гиёк" data-lang-en="giyeok" data-lang-ko="기역">гиёк</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="n">
-    ㄴ<div class="pronunciation" data-lang-ru="ниын" data-lang-en="nieun" data-lang-ko="니은">ниын</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="d/t">
-    ㄷ<div class="pronunciation" data-lang-ru="тигыт" data-lang-en="digeut" data-lang-ko="디귿">тигыт</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="r/l">
-    ㄹ<div class="pronunciation" data-lang-ru="риыль" data-lang-en="rieul" data-lang-ko="리을">риыль</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="m">
-    ㅁ<div class="pronunciation" data-lang-ru="миым" data-lang-en="mieum" data-lang-ko="미음">миым</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="b/p">
-    ㅂ<div class="pronunciation" data-lang-ru="пиып" data-lang-en="bieup" data-lang-ko="비읍">пиып</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="s">
-    ㅅ<div class="pronunciation" data-lang-ru="сиот" data-lang-en="siot" data-lang-ko="시옷">сиот</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="ng/silent">
-    ㅇ<div class="pronunciation" data-lang-ru="иын" data-lang-en="ieung" data-lang-ko="이응">иын</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="j/ch">
-    ㅈ<div class="pronunciation" data-lang-ru="чиыт" data-lang-en="jieut" data-lang-ko="지읒">чиыт</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="ch">
-    ㅊ<div class="pronunciation" data-lang-ru="чиыт (ударный)" data-lang-en="chieut" data-lang-ko="치읓">чиыт (ударный)</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="k (hard)">
-    ㅋ<div class="pronunciation" data-lang-ru="хиык" data-lang-en="kieuk" data-lang-ko="키읔">хиык</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="t (hard)">
-    ㅌ<div class="pronunciation" data-lang-ru="тиыт" data-lang-en="tieut" data-lang-ko="티읕">тиыт</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="p (hard)">
-    ㅍ<div class="pronunciation" data-lang-ru="пиып (ударный)" data-lang-en="pieup" data-lang-ko="피읖">пиып (ударный)</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="h">
-    ㅎ<div class="pronunciation" data-lang-ru="хиыт" data-lang-en="hieut" data-lang-ko="히읗">хиыт</div>
-  </div>
-</div>
+      <h2>🚶‍♂️ Основные глаголы и их спряжение</h2>
+      <p>Корейские глаголы спрягаются в зависимости от времени и уровня вежливости. Вот самые популярные глаголы с примерами в настоящем времени:</p>
+      <table>
+        <thead>
+          <tr><th>Глагол (основа)</th><th>Настоящее время (вежливая форма)</th><th>Перевод</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>하다</td><td>해요</td><td>делать</td></tr>
+          <tr><td>가다</td><td>가요</td><td>идти</td></tr>
+          <tr><td>오다</td><td>와요</td><td>приходить</td></tr>
+          <tr><td>먹다</td><td>먹어요</td><td>есть</td></tr>
+          <tr><td>마시다</td><td>마셔요</td><td>пить</td></tr>
+          <tr><td>보다</td><td>봐요</td><td>смотреть</td></tr>
+        </tbody>
+      </table>
 
-<h2 data-lang-ru="Двойные согласные (쌍자음)"
-    data-lang-en="Double consonants (Ssangjaeum)"
-    data-lang-ko="쌍자음">Двойные согласные (쌍자음)</h2>
+      <h2>📖 Примеры предложений с глаголами</h2>
+      <ul>
+        <li>저는 공부해요. — Я учусь.</li>
+        <li>우리는 도서관에 가요. — Мы идём в библиотеку.</li>
+        <li>그는 커피를 마셔요. — Он пьёт кофе.</li>
+        <li>나는 영화를 봐요. — Я смотрю фильм.</li>
+      </ul>
 
-<div class="consonants-grid" aria-label="Double consonants">
-  <div class="consonant-box" tabindex="0" data-sound="kk">
-    ㄲ<div class="pronunciation" data-lang-ru="ссангиёк" data-lang-en="ssanggiyeok" data-lang-ko="쌍기역">ссангиёк</div>
+      <h2>💬 Полезные выражения и фразы</h2>
+      <ul>
+        <li>안녕하세요 — Здравствуйте</li>
+        <li>감사합니다 — Спасибо</li>
+        <li>미안해요 — Извините</li>
+        <li>괜찮아요 — Всё в порядке</li>
+        <li>잘 지냈어요? — Как дела?</li>
+        <li>어디에 가요? — Куда идёте?</li>
+      </ul>
+
+      <h2>⏳ Уровни вежливости в корейском языке</h2>
+      <p>Корейский язык богат на уровни вежливости, и важно правильно выбирать форму речи:</p>
+      <ul>
+        <li><strong>반말 (панмаль)</strong> — разговорный, неформальный стиль. Используется с близкими друзьями и младшими по возрасту.</li>
+        <li><strong>존댓말 (чондэтмаль)</strong> — стандартный вежливый стиль, используется с незнакомыми и старшими людьми.</li>
+        <li><strong>격식체</strong> — официальный стиль речи, применяется на работе, в официальных встречах, новостях.</li>
+      </ul>
+      <p>Например, глагол <em>하다</em> (делать) в разных стилях:</p>
+      <ul>
+        <li>반말: 해</li>
+        <li>존댓말: 해요</li>
+        <li>격식체: 합니다</li>
+      </ul>
+
+      <h2>❓ Формирование вопросов</h2>
+      <p>Для построения вопросов в корейском языке добавляют специальные окончания или меняют интонацию:</p>
+      <ul>
+        <li>끝났어요? — Закончилось?</li>
+        <li>어디 가요? — Куда идёте?</li>
+        <li>이거 뭐예요? — Что это?</li>
+      </ul>
+
+      <h2>📍 Наречия времени и места</h2>
+      <ul>
+        <li>오늘 — сегодня</li>
+        <li>어제 — вчера</li>
+        <li>내일 — завтра</li>
+        <li>여기 — здесь</li>
+        <li>거기 — там</li>
+        <li>저기 — вон там</li>
+      </ul>
+
+      <h2>⏰ Спряжение глаголов в разных временах</h2>
+      <table>
+        <thead>
+          <tr><th>Глагол</th><th>Настоящее</th><th>Прошедшее</th><th>Будущее</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>가다 (идти)</td><td>가요</td><td>갔어요</td><td>갈 거예요</td></tr>
+          <tr><td>먹다 (есть)</td><td>먹어요</td><td>먹었어요</td><td>먹을 거예요</td></tr>
+          <tr><td>보다 (смотреть)</td><td>봐요</td><td>봤어요</td><td>볼 거예요</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📖 Дополнительные примеры предложений</h2>
+      <ul>
+        <li>내일 친구를 만나요. — Завтра встречусь с другом.</li>
+        <li>오늘 날씨가 좋아요. — Сегодня хорошая погода.</li>
+        <li>저는 도서관에 가요. — Я иду в библиотеку.</li>
+        <li>어제 영화를 봤어요. — Вчера смотрел фильм.</li>
+      </ul>
+
+      <h2>🎓 Советы для изучающих корейский</h2>
+      <p>Чтобы быстро прогрессировать:</p>
+      <ul>
+        <li>Практикуйте речь вслух, чтобы привыкнуть к произношению.</li>
+        <li>Используйте карточки для запоминания слов.</li>
+        <li>Смотрите корейские фильмы и драмы с субтитрами.</li>
+        <li>Регулярно повторяйте грамматику и лексику.</li>
+      </ul>
+
+      <h2>📚 Словарный запас: полезные слова</h2>
+      <ul>
+        <li>친구 — друг</li>
+        <li>학교 — школа</li>
+        <li>책 — книга</li>
+        <li>음식 — еда</li>
+        <li>물 — вода</li>
+        <li>커피 — кофе</li>
+        <li>사랑 — любовь</li>
+        <li>행복 — счастье</li>
+      </ul>
+
+      <h2>🔊 Произношение: важные заметки</h2>
+      <p>В корейском языке важна правильная интонация и ударение, особенно на окончаниях слов, которые меняют смысл и уровень вежливости. Для улучшения произношения рекомендуется слушать носителей и повторять за ними.</p>
+
+      <h2>🎧 Аудио и видео ресурсы для практики</h2>
+      <ul>
+        <li><a href="https://www.talktomeinkorean.com" target="_blank" rel="noopener">Talk To Me In Korean</a> — отличные уроки и подкасты.</li>
+        <li><a href="https://www.youtube.com/user/DavidBanz" target="_blank" rel="noopener">Korean Unnie на YouTube</a> — уроки корейского с живой речью.</li>
+      </ul>
+
+      <h2>📝 Итог урока</h2>
+      <blockquote>Корейский язык — это язык уважения и точности, где грамматические окончания играют ключевую роль в общении. Постепенно изучайте грамматику, запоминайте слова и обязательно практикуйтесь!</blockquote>
+    </section>
+
+    <!-- Английский -->
+    <section data-lang="en" aria-label="Lesson content in English">
+      <h2>📚 Basic Grammar Structures</h2>
+      <p>In Korean, correct use of linking verbs and endings is crucial to convey meaning and politeness level. Key forms of the verb "to be":</p>
+      <ul>
+        <li><strong>이에요 / 예요</strong> — polite informal linking verb used after nouns.</li>
+        <li><strong>입니다</strong> — formal linking verb used in official speeches, documents, and news.</li>
+        <li><strong>아니에요</strong> — negative form meaning "is not".</li>
+        <li><strong>이에요? / 예요?</strong> — question forms to ask "Is it ...?"</li>
+      </ul>
+
+      <div class="highlight">Example: <br>저는 학생이에요. (I am a student.)<br>이것은 책이에요? (Is this a book?)</div>
+
+      <h2>🚶‍♂️ Basic Verbs and Conjugation</h2>
+      <p>Korean verbs conjugate based on tense and politeness level. Common verbs in present tense:</p>
+      <table>
+        <thead>
+          <tr><th>Verb (Root)</th><th>Present Tense (Polite)</th><th>Meaning</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>하다</td><td>해요</td><td>to do</td></tr>
+          <tr><td>가다</td><td>가요</td><td>to go</td></tr>
+          <tr><td>오다</td><td>와요</td><td>to come</td></tr>
+          <tr><td>먹다</td><td>먹어요</td><td>to eat</td></tr>
+          <tr><td>마시다</td><td>마셔요</td><td>to drink</td></tr>
+          <tr><td>보다</td><td>봐요</td><td>to see/watch</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📖 Example Sentences</h2>
+      <ul>
+        <li>저는 공부해요. — I study.</li>
+        <li>우리는 도서관에 가요. — We go to the library.</li>
+        <li>그는 커피를 마셔요. — He drinks coffee.</li>
+        <li>나는 영화를 봐요. — I watch a movie.</li>
+      </ul>
+
+      <h2>💬 Useful Phrases</h2>
+      <ul>
+        <li>안녕하세요 — Hello</li>
+        <li>감사합니다 — Thank you</li>
+        <li>미안해요 — Sorry</li>
+        <li>괜찮아요 — It's okay</li>
+        <li>잘 지냈어요? — How have you been?</li>
+        <li>어디에 가요? — Where are you going?</li>
+      </ul>
+
+      <h2>⏳ Levels of Politeness</h2>
+      <p>Korean has several politeness levels important for communication:</p>
+      <ul>
+        <li><strong>반말 (Banmal)</strong> — informal speech used with close friends or younger people.</li>
+        <li><strong>존댓말 (Jondaetmal)</strong> — polite speech used with strangers and elders.</li>
+        <li><strong>격식체</strong> — formal speech used in official or professional settings.</li>
+      </ul>
+      <p>Example verb <em>하다</em> in different speech levels:</p>
+      <ul>
+        <li>반말: 해</li>
+        <li>존댓말: 해요</li>
+        <li>격식체: 합니다</li>
+      </ul>
+
+      <h2>❓ Making Questions</h2>
+      <p>Questions in Korean are formed by adding special endings or changing intonation:</p>
+      <ul>
+        <li>끝났어요? — Is it finished?</li>
+        <li>어디 가요? — Where are you going?</li>
+        <li>이거 뭐예요? — What is this?</li>
+      </ul>
+
+      <h2>📍 Time and Place Adverbs</h2>
+      <ul>
+        <li>오늘 — today</li>
+        <li>어제 — yesterday</li>
+        <li>내일 — tomorrow</li>
+        <li>여기 — here</li>
+        <li>거기 — there</li>
+        <li>저기 — over there</li>
+      </ul>
+
+      <h2>⏰ Verb Conjugation Tenses</h2>
+      <table>
+        <thead>
+          <tr><th>Verb</th><th>Present</th><th>Past</th><th>Future</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>가다 (to go)</td><td>가요</td><td>갔어요</td><td>갈 거예요</td></tr>
+          <tr><td>먹다 (to eat)</td><td>먹어요</td><td>먹었어요</td><td>먹을 거예요</td></tr>
+          <tr><td>보다 (to see/watch)</td><td>봐요</td><td>봤어요</td><td>볼 거예요</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📖 Additional Examples</h2>
+      <ul>
+        <li>내일 친구를 만나요. — I will meet a friend tomorrow.</li>
+        <li>오늘 날씨가 좋아요. — The weather is good today.</li>
+        <li>저는 도서관에 가요. — I go to the library.</li>
+        <li>어제 영화를 봤어요. — I watched a movie yesterday.</li>
+      </ul>
+
+      <h2>🎓 Study Tips</h2>
+      <p>To progress quickly:</p>
+      <ul>
+        <li>Practice speaking aloud to get used to pronunciation.</li>
+        <li>Use flashcards for vocabulary memorization.</li>
+        <li>Watch Korean dramas and movies with subtitles.</li>
+        <li>Regularly review grammar and vocabulary.</li>
+      </ul>
+
+      <h2>📚 Vocabulary: Useful Words</h2>
+      <ul>
+        <li>친구 — friend</li>
+        <li>학교 — school</li>
+        <li>책 — book</li>
+        <li>음식 — food</li>
+        <li>물 — water</li>
+        <li>커피 — coffee</li>
+        <li>사랑 — love</li>
+        <li>행복 — happiness</li>
+      </ul>
+
+      <h2>🔊 Pronunciation Notes</h2>
+      <p>Correct intonation and stress on endings are important in Korean, as they can change meaning and politeness. Listening and repeating native speakers helps greatly.</p>
+
+      <h2>🎧 Audio and Video Resources</h2>
+      <ul>
+        <li><a href="https://www.talktomeinkorean.com" target="_blank" rel="noopener">Talk To Me In Korean</a> — great lessons and podcasts.</li>
+        <li><a href="https://www.youtube.com/user/DavidBanz" target="_blank" rel="noopener">Korean Unnie on YouTube</a> — lively Korean lessons.</li>
+      </ul>
+
+      <h2>📝 Lesson Summary</h2>
+      <blockquote>Korean is a language of respect and precision where grammatical endings play a key role in communication. Study grammar step-by-step, memorize vocabulary, and practice regularly!</blockquote>
+    </section>
+
+    <!-- Korean -->
+    <section data-lang="ko" aria-label="한국어 수업 내용">
+      <h2>📚 기본 문법 구조</h2>
+      <p>한국어에서 올바른 연결 동사와 어미 사용은 의미와 존댓말 수준을 전달하는 데 매우 중요합니다. 다음은 ‘이다’의 주요 형태입니다:</p>
+      <ul>
+        <li><strong>이에요 / 예요</strong> — 명사 뒤에 오는 공손한 연결 동사.</li>
+        <li><strong>입니다</strong> — 공식적이고 격식 있는 연결 동사.</li>
+        <li><strong>아니에요</strong> — 부정형, ‘~이/가 아니다’의 의미.</li>
+        <li><strong>이에요? / 예요?</strong> — ‘~입니까?’ 의 질문형.</li>
+      </ul>
+
+      <div class="highlight">예시: <br>저는 학생이에요. (나는 학생입니다.)<br>이것은 책이에요? (이것은 책입니까?)</div>
+
+      <h2>🚶‍♂️ 기본 동사와 활용</h2>
+      <p>한국어 동사는 시제와 존댓말 수준에 따라 활용됩니다. 주요 동사의 현재 시제:</p>
+      <table>
+        <thead>
+          <tr><th>동사 (어간)</th><th>현재 시제 (공손체)</th><th>뜻</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>하다</td><td>해요</td><td>하다</td></tr>
+          <tr><td>가다</td><td>가요</td><td>가다</td></tr>
+          <tr><td>오다</td><td>와요</td><td>오다</td></tr>
+          <tr><td>먹다</td><td>먹어요</td><td>먹다</td></tr>
+          <tr><td>마시다</td><td>마셔요</td><td>마시다</td></tr>
+          <tr><td>보다</td><td>봐요</td><td>보다</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📖 예문</h2>
+      <ul>
+        <li>저는 공부해요.</li>
+        <li>우리는 도서관에 가요.</li>
+        <li>그는 커피를 마셔요.</li>
+        <li>나는 영화를 봐요.</li>
+      </ul>
+
+      <h2>💬 유용한 표현</h2>
+      <ul>
+        <li>안녕하세요</li>
+        <li>감사합니다</li>
+        <li>미안해요</li>
+        <li>괜찮아요</li>
+        <li>잘 지냈어요?</li>
+        <li>어디에 가요?</li>
+      </ul>
+
+      <h2>⏳ 존댓말 단계</h2>
+      <p>한국어에는 여러 존댓말 단계가 있습니다:</p>
+      <ul>
+        <li><strong>반말</strong> — 친한 친구나 나이가 어린 사람과 사용하는 비공식체.</li>
+        <li><strong>존댓말</strong> — 대부분 상황에서 사용하는 공손체.</li>
+        <li><strong>격식체</strong> — 공식적 상황에서 사용하는 형태.</li>
+      </ul>
+      <p>동사 <em>하다</em> 의 다양한 형태:</p>
+      <ul>
+        <li>반말: 해</li>
+        <li>존댓말: 해요</li>
+        <li>격식체: 합니다</li>
+      </ul>
+
+      <h2>❓ 질문 만들기</h2>
+      <ul>
+        <li>끝났어요?</li>
+        <li>어디 가요?</li>
+        <li>이거 뭐예요?</li>
+      </ul>
+
+      <h2>📍 시간과 장소 부사</h2>
+      <ul>
+        <li>오늘</li>
+        <li>어제</li>
+        <li>내일</li>
+        <li>여기</li>
+        <li>거기</li>
+        <li>저기</li>
+      </ul>
+
+      <h2>⏰ 동사 시제 활용</h2>
+      <table>
+        <thead>
+          <tr><th>동사</th><th>현재</th><th>과거</th><th>미래</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>가다</td><td>가요</td><td>갔어요</td><td>갈 거예요</td></tr>
+          <tr><td>먹다</td><td>먹어요</td><td>먹었어요</td><td>먹을 거예요</td></tr>
+          <tr><td>보다</td><td>봐요</td><td>봤어요</td><td>볼 거예요</td></tr>
+        </tbody>
+      </table>
+
+      <h2>📖 추가 예문</h2>
+      <ul>
+        <li>내일 친구를 만나요.</li>
+        <li>오늘 날씨가 좋아요.</li>
+        <li>저는 도서관에 가요.</li>
+        <li>어제 영화를 봤어요.</li>
+      </ul>
+
+      <h2>🎓 학습 팁</h2>
+      <ul>
+        <li>발음을 익히기 위해 큰 소리로 말하기 연습하세요.</li>
+        <li>어휘 암기를 위해 플래시카드를 활용하세요.</li>
+        <li>한국 드라마와 영화를 자막과 함께 시청하세요.</li>
+        <li>문법과 단어를 꾸준히 복습하세요.</li>
+      </ul>
+
+      <h2>📚 유용한 단어</h2>
+      <ul>
+        <li>친구</li>
+        <li>학교</li>
+        <li>책</li>
+        <li>음식</li>
+        <li>물</li>
+        <li>커피</li>
+        <li>사랑</li>
+        <li>행복</li>
+      </ul>
+
+      <h2>🔊 발음 관련 노트</h2>
+      <p>한국어에서 올바른 억양과 어미 강조는 의미와 존댓말을 결정합니다. 원어민 소리를 듣고 따라 하는 게 매우 중요합니다.</p>
+
+      <h2>🎧 오디오/비디오 자료</h2>
+      <ul>
+        <li><a href="https://www.talktomeinkorean.com" target="_blank" rel="noopener">Talk To Me In Korean</a></li>
+        <li><a href="https://www.youtube.com/user/DavidBanz" target="_blank" rel="noopener">Korean Unnie</a></li>
+      </ul>
+
+      <h2>📝 요약</h2>
+      <blockquote>한국어는 존중과 정확성을 중요시하는 언어로, 문법 어미가 핵심입니다. 차근차근 공부하고, 어휘를 외우며 꾸준히 연습하세요!</blockquote>
+    </section>
+  </main>
+
+  <div class="nav-buttons">
+    <button onclick="location.href='index.html'">← Назад в главную</button>
+    <button onclick="location.href='lesson3.html'">Следующий урок →</button>
   </div>
-  <div class="consonant-box" tabindex="0" data-sound="tt">
-    ㄸ<div class="pronunciation" data-lang-ru="ссантигыт" data-lang-en="ssangdigeut" data-lang-ko="쌍디귿">ссантигыт</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="pp">
-    ㅃ<div class="pronunciation" data-lang-ru="ссанпиып" data-lang-en="ssangbieup" data-lang-ko="쌍비읍">ссанпиып</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="ss">
-    ㅆ<div class="pronunciation" data-lang-ru="ссансиот" data-lang-en="ssangsiot" data-lang-ko="쌍시옷">ссансиот</div>
-  </div>
-  <div class="consonant-box" tabindex="0" data-sound="jj">
-    ㅉ<div class="pronunciation" data-lang-ru="ссанчиыт" data-lang-en="ssangjieut" data-lang-ko="쌍지읒">ссанчиыт</div>
-  </div>
-</div>
 
-<div class="info-block" data-lang-ru="Нажмите на любую букву, чтобы увидеть, как она звучит (в будущем можно добавить звук)."
-     data-lang-en="Click on any letter to see how it sounds (sound can be added later)."
-     data-lang-ko="글자를 클릭하면 발음을 확인할 수 있습니다 (나중에 음성을 추가할 수 있습니다)."></div>
+  <script>
+    const langButtons = document.querySelectorAll('nav.lang-switch button');
+    const sections = document.querySelectorAll('section[data-lang]');
 
-<h2 data-lang-ru="Практические упражнения"
-    data-lang-en="Practice Exercises"
-    data-lang-ko="연습 문제"></h2>
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedLang = btn.getAttribute('data-lang-btn');
+        // Обновляем состояние кнопок
+        langButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
 
-<div class="test-section" aria-label="Practice test">
-  <form id="test2">
-    <label for="answer1" data-lang-ru="1. Напишите двойную согласную, которая звучит как 'ss':" data-lang-en="1. Write the double consonant that sounds like 'ss':" data-lang-ko="1. 'ss' 소리 쌍자음을 쓰세요:"></label>
-    <input id="answer1" name="answer1" type="text" autocomplete="off" />
-
-    <label for="answer2" data-lang-ru="2. Какая буква произносится как 'ng' в конце слога?" data-lang-en="2. Which letter is pronounced as 'ng' at the end of a syllable?" data-lang-ko="2. 음절 끝에서 'ng'로 발음되는 자음은?"></label>
-    <input id="answer2" name="answer2" type="text" autocomplete="off" />
-
-    <label for="answer3" data-lang-ru="3. Как называется буква ㄷ?" data-lang-en="3. What is the name of the letter ㄷ?" data-lang-ko="3. ㄷ 자음의 이름은?"></label>
-    <input id="answer3" name="answer3" type="text" autocomplete="off" />
-
-    <button type="button" onclick="checkTest()">Проверить</button>
-  </form>
-  <div id="testResult"></div>
-</div>
-
-<script>
-  // Language switcher
-  const langButtons = document.querySelectorAll('.lang-switch button');
-  const allLangElems = document.querySelectorAll('[data-lang-ru]');
-  let lang = 'ru';
-
-  langButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      langButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      lang = btn.dataset.lang;
-      allLangElems.forEach(el => {
-        el.textContent = el.dataset[`lang${lang.toUpperCase()}`];
+        // Показываем выбранный раздел, скрываем остальные
+        sections.forEach(sec => {
+          if (sec.getAttribute('data-lang') === selectedLang) {
+            sec.classList.add('active');
+          } else {
+            sec.classList.remove('active');
+          }
+        });
       });
-      // Reset results on lang switch
-      document.getElementById('testResult').textContent = '';
     });
-  });
-  allLangElems.forEach(el => {
-    el.textContent = el.dataset.langRU;
-  });
-
-  // Test checker
-  function checkTest() {
-    const ans1 = document.getElementById('answer1').value.trim().toLowerCase();
-    const ans2 = document.getElementById('answer2').value.trim();
-    const ans3 = document.getElementById('answer3').value.trim().toLowerCase();
-
-    let score = 0, total = 3;
-    // Accept variations:
-    if (ans1 === 'ㅆ' || ans1 === 'ss' || ans1 === 'сс' || ans1 === 'ссансиот') score++;
-    if (ans2 === 'ㅇ' || ans2.toLowerCase() === 'ieung' || ans2 === 'иын') score++;
-    if (ans3 === 'тигыт' || ans3 === 'digeut' || ans3 === 'ㄷ' || ans3 === 'тигыт' || ans3 === '디귿') score++;
-
-    let resultMsg;
-    if(lang==='ru'){
-      resultMsg = `Вы ответили правильно на ${score} из ${total} вопросов.`;
-    } else if(lang==='en'){
-      resultMsg = `You answered correctly on ${score} out of ${total} questions.`;
-    } else {
-      resultMsg = `총 ${total}문제 중 ${score}문제를 맞추셨습니다.`;
-    }
-
-    document.getElementById('testResult').textContent = resultMsg;
-  }
-</script>
+  </script>
 </body>
 </html>
