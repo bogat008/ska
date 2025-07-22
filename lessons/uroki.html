@@ -67,7 +67,23 @@
   .item-list li:hover {
     background: #1222fa;
     color: white;
-  }
+  }button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: #45a049;
+}
+
+
+
+  
 </style>
 </head>
 <body>
@@ -101,7 +117,8 @@
   </section>
 </main>
 
-    <a href="../index.html" class="btn">Вернуться на главную</a>
+    <button onclick="location.href='../index.html'">← Назад в главную</button>
+
 
 <script>
   const btnLessons = document.getElementById('btn-lessons');
