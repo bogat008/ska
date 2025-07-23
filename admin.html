@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Админка — Управление доступом</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+    th { background: #333; color: #fff; }
+    button { padding: 5px 10px; }
+  </style>
+</head>
+<body>
+  <h1>Админка — Управление доступом пользователей</h1>
+  <p>Показаны все пользователи и их доступ к урокам. Можно включать/выключать доступ.</p>
+  <table>
+    <thead>
+      <tr><th>Email</th><th>Доступ</th><th>Действие</th></tr>
+    </thead>
+    <tbody id="users-table-body"></tbody>
+  </table>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    // Твой конфиг Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
+      authDomain: "ska-language.firebaseapp.com",
+      projectId: "ska-language",
+      storageBucket: "ska-language.firebasestorage.app",
+      messagingSenderId: "443927736897",
+      appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
+      measurementId: "G-DDXFT9VQ9C"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const usersTableBody = document.getElementById('users-table-body');
+
+    async function loadUsers() {
+      const usersRef = ref(db, 'users');
+      const snapshot = await get(usersRef);
+
+      if (!snapshot.exists()) {
+        usersTableBody.innerHTML = '<tr><td colspan="3">Пользователей нет</td></tr>';
+        return;
+      }
+
+      const usersData = snapshot.val();
+      usersTableBody.innerHTML = '';
+
+      for (const uid in usersData) {
+        const user = usersData[uid];
+        const email = user.email || 'Без email';
+        const access = user.accessGranted === true;
+
+        const tr = document.createElement('tr');
+
+        tr.innerHTML = `
+          <td>${email}</td>
+          <td>${access ? 'Доступ разрешён' : 'Доступ запрещён'}</td>
+          <td><button data-uid="${uid}">${access ? 'Запретить' : 'Разрешить'}</button></td>
+        `;
+
+        usersTableBody.appendChild(tr);
+
+        const btn = tr.querySelector('button');
+        btn.addEventListener('click', () => toggleAccess(uid, !access));
+      }
+    }
+
+    async function toggleAccess(uid, newAccess) {
+      const updates = {};
+      updates['users/' + uid + '/accessGranted'] = newAccess;
+
+      try {
+        await update(ref(db), updates);
+        alert(`Доступ для пользователя ${uid} ${newAccess ? 'разрешён' : 'запрещён'}`);
+        loadUsers();
+      } catch (error) {
+        alert('Ошибка при обновлении доступа: ' + error.message);
+      }
+    }
+
+    loadUsers();
+  </script>
+</body>
+</html>
