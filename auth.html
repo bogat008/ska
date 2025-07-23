@@ -2,117 +2,90 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Вход или регистрация</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(to right, #74ebd5, #ACB6E5);
-    }
-
-    .container {
-      background-color: white;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      width: 300px;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .divider {
-      text-align: center;
-      margin: 15px 0;
-    }
-  </style>
+  <title>SKA — Регистрация и Вход</title>
 </head>
 <body>
-  <div class="container">
-    <h2>Добро пожаловать!</h2>
+  <h1>Регистрация</h1>
+  <form id="register-form">
+    <input type="email" name="email" placeholder="Email" required /><br />
+    <input type="password" name="password" placeholder="Пароль" required /><br />
+    <button type="submit">Зарегистрироваться</button>
+  </form>
 
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Пароль" />
+  <h1>Вход</h1>
+  <form id="login-form">
+    <input type="email" name="email" placeholder="Email" required /><br />
+    <input type="password" name="password" placeholder="Пароль" required /><br />
+    <button type="submit">Войти</button>
+  </form>
 
-    <button onclick="login()">Войти</button>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    <div class="divider">или</div>
-
-    <button onclick="register()">Зарегистрироваться</button>
-  </div>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth-compat.js"></script>
-
-  <script>
+    // Твой Firebase конфиг
     const firebaseConfig = {
-      apiKey: "AIzaSyDYGBjyAIuwvI9rz2bHr-XXXXXXXXXXX",
-      authDomain: "ska-008.firebaseapp.com",
-      projectId: "ska-008",
-      storageBucket: "ska-008.appspot.com",
-      messagingSenderId: "1086436669806",
-      appId: "1:1086436669806:web:ba5e113e7a2496f7XXXXXX"
+      apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
+      authDomain: "ska-language.firebaseapp.com",
+      projectId: "ska-language",
+      storageBucket: "ska-language.firebasestorage.app",
+      messagingSenderId: "443927736897",
+      appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
+      measurementId: "G-DDXFT9VQ9C"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    // Регистрация
+    const registerForm = document.getElementById('register-form');
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = registerForm.email.value;
+      const password = registerForm.password.value;
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          window.location.href = "index.html"; // ✅ редирект после входа
-        })
-        .catch((error) => {
-          alert("Ошибка входа: " + error.message);
+        // Добавляем пользователя в базу с accessGranted: false
+        await set(ref(db, 'users/' + user.uid), {
+          email: user.email,
+          accessGranted: false
         });
-    }
 
-    function register() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+        alert('Регистрация успешна! Теперь войдите в аккаунт.');
+        registerForm.reset();
+      } catch (error) {
+        alert('Ошибка регистрации: ' + error.message);
+      }
+    });
 
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          window.location.href = "index.html"; // ✅ редирект после регистрации
-        })
-        .catch((error) => {
-          alert("Ошибка регистрации: " + error.message);
-        });
-    }
+    // Вход
+    const loginForm = document.getElementById('login-form');
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = loginForm.email.value;
+      const password = loginForm.password.value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert('Вы вошли в аккаунт! Сейчас вас перенаправит...');
+        loginForm.reset();
+
+        // Перенаправляем на главную страницу после входа
+        window.location.href = "index.html";
+      } catch (error) {
+        alert('Ошибка входа: ' + error.message);
+      }
+    });
+
+    // Если пользователь уже залогинен, сразу перенаправляем на index.html
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        window.location.href = "index.html";
+      }
+    });
   </script>
 </body>
 </html>
