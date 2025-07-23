@@ -2,30 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Админка — Управление доступом</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
-    th { background: #333; color: #fff; }
-    button { padding: 5px 10px; }
-  </style>
-</head>
-<body>
-  <h1>Админка — Управление доступом пользователей</h1>
-  <p>Показаны все пользователи и их доступ к урокам. Можно включать/выключать доступ.</p>
-  <table>
-    <thead>
-      <tr><th>Email</th><th>Доступ</th><th>Действие</th></tr>
-    </thead>
-    <tbody id="users-table-body"></tbody>
-  </table>
-
+  <title>SKA — Админка</title>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs,
+      doc,
+      getDoc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    // Твой конфиг Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
       authDomain: "ska-language.firebaseapp.com",
@@ -37,56 +30,119 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    const usersTableBody = document.getElementById('users-table-body');
+    const usersListDiv = document.getElementById("users-list");
+    const logoutBtn = document.getElementById("logout-btn");
+    const adminStatusDiv = document.getElementById("admin-status");
 
-    async function loadUsers() {
-      const usersRef = ref(db, 'users');
-      const snapshot = await get(usersRef);
+    let currentUser;
 
-      if (!snapshot.exists()) {
-        usersTableBody.innerHTML = '<tr><td colspan="3">Пользователей нет</td></tr>';
+    // Проверяем, авторизован ли пользователь и админ ли он
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        alert("Пожалуйста, войдите в аккаунт для доступа к админке.");
+        window.location.href = "auth.html";
         return;
       }
 
-      const usersData = snapshot.val();
-      usersTableBody.innerHTML = '';
+      currentUser = user;
 
-      for (const uid in usersData) {
-        const user = usersData[uid];
-        const email = user.email || 'Без email';
-        const access = user.accessGranted === true;
-
-        const tr = document.createElement('tr');
-
-        tr.innerHTML = `
-          <td>${email}</td>
-          <td>${access ? 'Доступ разрешён' : 'Доступ запрещён'}</td>
-          <td><button data-uid="${uid}">${access ? 'Запретить' : 'Разрешить'}</button></td>
-        `;
-
-        usersTableBody.appendChild(tr);
-
-        const btn = tr.querySelector('button');
-        btn.addEventListener('click', () => toggleAccess(uid, !access));
+      // Проверяем, есть ли у пользователя поле isAdmin в Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        alert("Пользователь не найден в базе.");
+        window.location.href = "auth.html";
+        return;
       }
-    }
 
-    async function toggleAccess(uid, newAccess) {
-      const updates = {};
-      updates['users/' + uid + '/accessGranted'] = newAccess;
-
-      try {
-        await update(ref(db), updates);
-        alert(`Доступ для пользователя ${uid} ${newAccess ? 'разрешён' : 'запрещён'}`);
-        loadUsers();
-      } catch (error) {
-        alert('Ошибка при обновлении доступа: ' + error.message);
+      const userData = userDoc.data();
+      if (!userData.isAdmin) {
+        alert("У вас нет прав администратора.");
+        window.location.href = "index.html";
+        return;
       }
-    }
 
-    loadUsers();
+      adminStatusDiv.textContent = `Вы вошли как админ: ${user.email}`;
+
+      // Загружаем список пользователей
+      loadUsers();
+    });
+
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "auth.html";
+    });
+
+    async function loadUsers() {
+      usersListDiv.innerHTML = "<p>Загрузка пользователей...</p>";
+
+      const usersSnapshot = await getDocs(collection(db, "users"));
+      usersListDiv.innerHTML = "";
+
+      usersSnapshot.forEach((userDoc) => {
+        const userData = userDoc.data();
+        const userId = userDoc.id;
+
+        const userDiv = document.createElement("div");
+        userDiv.style = "margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;";
+
+        // Email и UID
+        const emailP = document.createElement("p");
+        emailP.textContent = `Email: ${userData.email || "(нет email)"}`;
+        userDiv.appendChild(emailP);
+
+        const uidP = document.createElement("p");
+        uidP.textContent = `UID: ${userId}`;
+        userDiv.appendChild(uidP);
+
+        // Поле allowedLessons
+        const lessonsLabel = document.createElement("label");
+        lessonsLabel.textContent = "Доступные уроки (через запятую): ";
+        userDiv.appendChild(lessonsLabel);
+
+        const lessonsInput = document.createElement("input");
+        lessonsInput.type = "text";
+        lessonsInput.value = (userData.allowedLessons || []).join(", ");
+        lessonsInput.style = "width: 100%; margin-top: 5px; padding: 5px; box-sizing: border-box;";
+        userDiv.appendChild(lessonsInput);
+
+        // Кнопка сохранить
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "Сохранить";
+        saveBtn.style = "margin-top: 8px; padding: 6px 12px; cursor: pointer;";
+        userDiv.appendChild(saveBtn);
+
+        saveBtn.addEventListener("click", async () => {
+          // Преобразуем строку в массив чисел
+          const lessonsStr = lessonsInput.value.trim();
+          let lessonsArr = [];
+          if (lessonsStr.length > 0) {
+            lessonsArr = lessonsStr.split(",").map(x => Number(x.trim())).filter(x => !isNaN(x));
+          }
+
+          try {
+            await setDoc(doc(db, "users", userId), {
+              ...userData,
+              allowedLessons: lessonsArr
+            });
+            alert(`Доступ пользователя ${userData.email} обновлен!`);
+          } catch (error) {
+            alert("Ошибка при сохранении: " + error.message);
+          }
+        });
+
+        usersListDiv.appendChild(userDiv);
+      });
+    }
   </script>
+</head>
+<body>
+  <h1>Админка SKA</h1>
+  <div id="admin-status">Загрузка...</div>
+  <button id="logout-btn">Выйти из админки</button>
+  <hr />
+  <div id="users-list"></div>
 </body>
 </html>
