@@ -2,29 +2,12 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>SKA — Регистрация и Вход</title>
-</head>
-<body>
-  <h1>Регистрация</h1>
-  <form id="register-form">
-    <input type="email" name="email" placeholder="Email" required /><br />
-    <input type="password" name="password" placeholder="Пароль" required /><br />
-    <button type="submit">Зарегистрироваться</button>
-  </form>
-
-  <h1>Вход</h1>
-  <form id="login-form">
-    <input type="email" name="email" placeholder="Email" required /><br />
-    <input type="password" name="password" placeholder="Пароль" required /><br />
-    <button type="submit">Войти</button>
-  </form>
-
+  <title>SKA — Авторизация</title>
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-    // Твой Firebase конфиг
     const firebaseConfig = {
       apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
       authDomain: "ska-language.firebaseapp.com",
@@ -37,10 +20,11 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getDatabase(app);
+    const db = getFirestore(app);
 
-    // Регистрация
     const registerForm = document.getElementById('register-form');
+    const loginForm = document.getElementById('login-form');
+
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = registerForm.email.value;
@@ -48,44 +32,46 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-
-        // Добавляем пользователя в базу с accessGranted: false
-        await set(ref(db, 'users/' + user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
           email: user.email,
-          accessGranted: false
+          allowedLessons: [1]  // Даем доступ к уроку 1 по умолчанию
         });
-
-        alert('Регистрация успешна! Теперь войдите в аккаунт.');
-        registerForm.reset();
+        alert('Регистрация успешна! Сейчас вы будете перенаправлены на главную страницу.');
+        window.location.href = "index.html";  // перенаправляем
       } catch (error) {
         alert('Ошибка регистрации: ' + error.message);
       }
     });
 
-    // Вход
-    const loginForm = document.getElementById('login-form');
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = loginForm.email.value;
       const password = loginForm.password.value;
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        alert('Вы вошли в аккаунт! Сейчас вас перенаправит...');
-        loginForm.reset();
-
-        // Перенаправляем на главную страницу после входа
-        window.location.href = "index.html";
+        alert('Вы вошли в аккаунт! Сейчас вы будете перенаправлены на главную страницу.');
+        window.location.href = "index.html";  // перенаправляем
       } catch (error) {
         alert('Ошибка входа: ' + error.message);
       }
     });
-
-    // Если пользователь уже залогинен, сразу перенаправляем на index.html
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.href = "index.html";
-      }
-    });
   </script>
+</head>
+<body>
+  <h1>SKA — Авторизация</h1>
+
+  <h2>Регистрация</h2>
+  <form id="register-form">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Пароль" required />
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+
+  <h2>Вход</h2>
+  <form id="login-form">
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Пароль" required />
+    <button type="submit">Войти</button>
+  </form>
 </body>
 </html>
