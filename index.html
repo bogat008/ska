@@ -184,6 +184,35 @@
       }
     }
   </style>
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  // Конфиг Firebase — вставь свой
+  const firebaseConfig = {
+    apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
+    authDomain: "ska-language.firebaseapp.com",
+    projectId: "ska-language",
+    storageBucket: "ska-language.firebasestorage.app",
+    messagingSenderId: "443927736897",
+    appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
+    measurementId: "G-DDXFT9VQ9C"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Если пользователь не авторизован — редирект на страницу входа
+      window.location.href = "auth.html";
+    } else {
+      // Пользователь авторизован, можешь тут запустить остальной код для index.html
+      console.log("Пользователь вошёл:", user.email);
+    }
+  });
+</script>
+
 </head>
 <body>
   <!-- Переключатель языков -->
