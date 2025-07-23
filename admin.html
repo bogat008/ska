@@ -2,35 +2,22 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Админка SKA — Управление доступом</title>
+  <title>Админка SKA — Управление пользователями</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-    table { border-collapse: collapse; width: 100%; background: #fff; }
-    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
-    input { width: 100%; box-sizing: border-box; padding: 5px; }
-    button { padding: 5px 10px; }
-    .logout-btn { margin-bottom: 20px; }
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; padding: 10px; background: #f4f4f4; }
+    h1 { text-align: center; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+    th { background-color: #764ba2; color: white; }
+    input.lesson-input { width: 100%; }
+    button { background-color: #764ba2; color: white; border: none; padding: 7px 14px; cursor: pointer; border-radius: 5px; }
+    button:hover { background-color: #5a3675; }
+    #logout { float: right; }
+    #status { margin-bottom: 15px; }
   </style>
-</head>
-<body>
-  <h1>Админка SKA — Управление доступом пользователей</h1>
-  <button id="logoutBtn" class="logout-btn">Выйти</button>
-  <table>
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Доступные уроки (через запятую)</th>
-        <th>Действия</th>
-      </tr>
-    </thead>
-    <tbody id="usersTableBody">
-      <!-- Здесь будет список пользователей -->
-    </tbody>
-  </table>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
     import { getFirestore, collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -47,72 +34,113 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const adminEmail = "koreatjk@gmail.com"; // <-- замени на свой email администратора
+    const adminEmail = "твоя_почта_админа@пример.com"; // Заменить на свой email
 
-    const usersTableBody = document.getElementById("usersTableBody");
-    const logoutBtn = document.getElementById("logoutBtn");
+    const statusDiv = document.getElementById('status');
+    const logoutBtn = document.getElementById('logout');
+    const usersTableBody = document.getElementById('users-body');
 
-    logoutBtn.addEventListener('click', async () => {
-      await signOut(auth);
-      window.location.href = "auth.html";
-    });
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "auth.html";
-        return;
-      }
-      if (user.email !== adminEmail) {
-        alert("Доступ запрещён. Вы не администратор.");
-        await signOut(auth);
-        window.location.href = "auth.html";
-        return;
-      }
-
-      // Загрузка пользователей из Firestore
-      const usersCol = collection(db, "users");
-      const usersSnapshot = await getDocs(usersCol);
-
-      usersTableBody.innerHTML = ""; // очистить таблицу
-
-      usersSnapshot.forEach(docSnap => {
-        const userData = docSnap.data();
-        const tr = document.createElement("tr");
+    function renderUsers(users) {
+      usersTableBody.innerHTML = "";
+      users.forEach(({ id, email, allowedLessons }) => {
+        const tr = document.createElement('tr');
 
         // Email
-        const tdEmail = document.createElement("td");
-        tdEmail.textContent = userData.email || "Без email";
+        const tdEmail = document.createElement('td');
+        tdEmail.textContent = email;
         tr.appendChild(tdEmail);
 
-        // Поле для allowedLessons
-        const tdLessons = document.createElement("td");
-        const inputLessons = document.createElement("input");
-        inputLessons.type = "text";
-        inputLessons.value = (userData.allowedLessons || []).join(", ");
-        tdLessons.appendChild(inputLessons);
+        // Allowed Lessons (input поле для редактирования)
+        const tdLessons = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'lesson-input';
+        input.value = allowedLessons.join(',');
+        tdLessons.appendChild(input);
         tr.appendChild(tdLessons);
 
         // Кнопка сохранить
-        const tdActions = document.createElement("td");
-        const saveBtn = document.createElement("button");
-        saveBtn.textContent = "Сохранить";
-        saveBtn.addEventListener("click", async () => {
-          const val = inputLessons.value;
-          // Преобразуем строку в массив чисел
-          const lessonsArr = val.split(",").map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-          try {
-            await updateDoc(doc(db, "users", docSnap.id), { allowedLessons: lessonsArr });
-            alert("Доступ обновлен!");
-          } catch (e) {
-            alert("Ошибка при сохранении: " + e.message);
+        const tdSave = document.createElement('td');
+        const saveBtn = document.createElement('button');
+        saveBtn.textContent = 'Сохранить';
+        saveBtn.onclick = async () => {
+          const newLessonsStr = input.value.trim();
+          const newLessons = newLessonsStr
+            .split(',')
+            .map(x => parseInt(x.trim()))
+            .filter(x => !isNaN(x) && x > 0);
+          if (newLessons.length === 0) {
+            alert("Введите хотя бы один номер урока (через запятую).");
+            return;
           }
-        });
-        tdActions.appendChild(saveBtn);
-        tr.appendChild(tdActions);
+          try {
+            await updateDoc(doc(db, "users", id), { allowedLessons: newLessons });
+            alert(`Доступы обновлены для ${email}`);
+          } catch (e) {
+            alert('Ошибка при обновлении: ' + e.message);
+          }
+        };
+        tdSave.appendChild(saveBtn);
+        tr.appendChild(tdSave);
 
         usersTableBody.appendChild(tr);
       });
+    }
+
+    async function loadUsers() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        const users = [];
+        querySnapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          users.push({
+            id: docSnap.id,
+            email: data.email || "без email",
+            allowedLessons: data.allowedLessons || []
+          });
+        });
+        renderUsers(users);
+      } catch (error) {
+        alert("Ошибка загрузки пользователей: " + error.message);
+      }
+    }
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        if (user.email !== adminEmail) {
+          alert("Доступ запрещен. Вы не администратор.");
+          window.location.href = "auth.html";
+          return;
+        }
+        statusDiv.textContent = `Вы вошли как: ${user.email}`;
+        loadUsers();
+      } else {
+        window.location.href = "auth.html";
+      }
     });
+
+    logoutBtn.onclick = async () => {
+      await signOut(auth);
+      window.location.href = "auth.html";
+    };
   </script>
+</head>
+<body>
+  <button id="logout">Выйти</button>
+  <h1>Админка SKA — Управление пользователями</h1>
+  <div id="status">Загрузка...</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Email пользователя</th>
+        <th>Доступные уроки (через запятую)</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody id="users-body">
+      <!-- Пользователи появятся здесь -->
+    </tbody>
+  </table>
 </body>
 </html>
