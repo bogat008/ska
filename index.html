@@ -53,17 +53,16 @@
     }
 
     .main-block {
-    max-width: 700px;
-    user-select: none;
-    background: rgba(0, 0, 0, 0.38);
-    padding: 200px 25px 40px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s forwards;
-}
-
+      max-width: 700px;
+      user-select: none;
+      background: rgba(0, 0, 0, 0.38);
+      padding: 200px 25px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
 
     @keyframes fadeInUp {
       to {
@@ -184,35 +183,75 @@
       }
     }
   </style>
+
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
 
-  // Конфиг Firebase — вставь свой
-  const firebaseConfig = {
-    apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
-    authDomain: "ska-language.firebaseapp.com",
-    projectId: "ska-language",
-    storageBucket: "ska-language.firebasestorage.app",
-    messagingSenderId: "443927736897",
-    appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
-    measurementId: "G-DDXFT9VQ9C"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
+      authDomain: "ska-language.firebaseapp.com",
+      projectId: "ska-language",
+      storageBucket: "ska-language.firebasestorage.app",
+      messagingSenderId: "443927736897",
+      appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
+      measurementId: "G-DDXFT9VQ9C"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      // Если пользователь не авторизован — редирект на страницу входа
-      window.location.href = "auth.html";
-    } else {
-      // Пользователь авторизован, можешь тут запустить остальной код для index.html
-      console.log("Пользователь вошёл:", user.email);
+    // Кнопки для ограничения доступа
+    const btnLessons = document.getElementById('btn-lessons');
+    const btnTests = document.getElementById('btn-tests');
+    const btnAbout = document.getElementById('btn-about');
+
+    function disableButton(button, message) {
+      button.style.pointerEvents = 'none';   // Отключаем клики
+      button.style.opacity = '0.5';           // Полупрозрачность
+      button.title = message;                  // Всплывающая подсказка
     }
-  });
-</script>
 
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        // Если не авторизован — переходим на страницу авторизации
+        window.location.href = "auth.html";
+      } else {
+        console.log("Пользователь вошёл:", user.email);
+
+        try {
+          const userRef = ref(db, 'users/' + user.uid);
+          const snapshot = await get(userRef);
+
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            // Если доступ не разрешён — блокируем кнопки
+            if (!data.accessGranted) {
+              const msg = "Доступ к разделам заблокирован администратором.";
+              disableButton(btnLessons, msg);
+              disableButton(btnTests, msg);
+              disableButton(btnAbout, msg);
+            }
+          } else {
+            // Нет данных пользователя — блокируем доступ
+            const msg = "Данные о доступе не найдены.";
+            disableButton(btnLessons, msg);
+            disableButton(btnTests, msg);
+            disableButton(btnAbout, msg);
+          }
+        } catch (error) {
+          console.error("Ошибка при проверке доступа:", error);
+          const msg = "Ошибка проверки доступа.";
+          disableButton(btnLessons, msg);
+          disableButton(btnTests, msg);
+          disableButton(btnAbout, msg);
+        }
+      }
+    });
+
+  </script>
 </head>
 <body>
   <!-- Переключатель языков -->
@@ -259,9 +298,9 @@
     </div>
 
     <div class="buttons">
-      <a href="lessons/uroki.html" class="btn" data-lang-ru="Начать уроки" data-lang-en="Start Lessons" data-lang-ko="수업 시작">Начать уроки</a>
-      <a href="tests.html" class="btn" data-lang-ru="Посмотреть тесты" data-lang-en="View Tests" data-lang-ko="테스트 보기">Посмотреть тесты</a>
-      <a href="about.html" class="btn" data-lang-ru="Узнать больше" data-lang-en="Learn More" data-lang-ko="더 알아보기">Узнать больше</a>
+      <a href="lessons/uroki.html" id="btn-lessons" class="btn" data-lang-ru="Начать уроки" data-lang-en="Start Lessons" data-lang-ko="수업 시작">Начать уроки</a>
+      <a href="tests.html" id="btn-tests" class="btn" data-lang-ru="Посмотреть тесты" data-lang-en="View Tests" data-lang-ko="테스트 보기">Посмотреть тесты</a>
+      <a href="about.html" id="btn-about" class="btn" data-lang-ru="Узнать больше" data-lang-en="Learn More" data-lang-ko="더 알아보기">Узнать больше</a>
     </div>
   </div>
 
@@ -289,7 +328,6 @@
       });
     });
 
-    // Загружаем язык из localStorage или по умолчанию русский
     const savedLang = localStorage.getItem('siteLanguage') || 'ru';
     setLanguage(savedLang);
   </script>
