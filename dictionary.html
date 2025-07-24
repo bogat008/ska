@@ -2,113 +2,306 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-lang-ru="О проекте" data-lang-en="About Project" data-lang-ko="프로젝트 소개">О проекте</title>
+  <title>SKA — Словарь</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea, #764ba2);
       color: #fff;
-      padding: 40px 20px;
+      background: url('images/bgrd.jpg') center center / cover no-repeat;
+      padding: 20px;
       box-sizing: border-box;
       min-height: 100vh;
     }
-
-    .container {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
+    .lang-switcher {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 10;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-      line-height: 1.6;
-    }
-
-    .lang-switch {
-      margin-bottom: 30px;
-    }
-
-    .lang-switch button {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      border: 1px solid #fff;
-      border-radius: 30px;
-      padding: 8px 16px;
-      margin: 0 5px;
-      cursor: pointer;
-      font-size: 0.95rem;
-    }
-
-    .lang-switch button:hover {
-      background: #fff;
-      color: #764ba2;
-    }
-
-    .back-button {
-      margin-top: 40px;
-      display: inline-block;
-      padding: 12px 30px;
-      border: 2px solid #fff;
+    .lang-switcher button {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
       color: #fff;
+      padding: 8px 14px;
       border-radius: 30px;
-      text-decoration: none;
-      transition: 0.3s ease;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
     }
-
-    .back-button:hover {
-      background: #fff;
+    .lang-switcher button:hover,
+    .lang-switcher button.active {
+      background-color: #fff;
       color: #764ba2;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.8rem;
+      text-shadow: 1px 1px 5px #000;
+    }
+    table {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      border-collapse: collapse;
+      background: rgba(0,0,0,0.5);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    thead {
+      background-color: #764ba2;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-size: 1.1rem;
+      color: #fff;
+    }
+    tbody tr:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody tr {
+        margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 10px;
+        border-radius: 8px;
+      }
+      tbody td {
+        padding-left: 50%;
+        position: relative;
+        font-size: 1rem;
+      }
+      tbody td::before {
+        position: absolute;
+        top: 12px;
+        left: 15px;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: 700;
+        content: attr(data-label);
+        color: #764ba2;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="lang-switch">
-      <button onclick="setLanguage('ru')">RU</button>
-      <button onclick="setLanguage('en')">EN</button>
-      <button onclick="setLanguage('ko')">KO</button>
-    </div>
 
-    <h1 data-lang-ru="О проекте"
-        data-lang-en="About the Project"
-        data-lang-ko="프로젝트에 대하여">О проекте</h1>
-
-    <p data-lang-ru="Этот сайт создан для тех, кто хочет изучать корейский язык с нуля. Мы предлагаем пошаговые уроки, тесты, словарь и поддержку на каждом этапе."
-       data-lang-en="This site is created for those who want to learn Korean from scratch. We offer step-by-step lessons, tests, a dictionary, and support every step of the way."
-       data-lang-ko="이 사이트는 한국어를 처음부터 배우고자 하는 사람들을 위해 만들어졌습니다. 우리는 단계별 수업, 테스트, 사전 및 전반적인 지원을 제공합니다.">
-       Этот сайт создан для тех, кто хочет изучать корейский язык с нуля. Мы предлагаем пошаговые уроки, тесты, словарь и поддержку на каждом этапе.
-    </p>
-
-    <a class="back-button" href="index.html"
-       data-lang-ru="Вернуться на главную"
-       data-lang-en="Back to Home"
-       data-lang-ko="홈으로 돌아가기">Вернуться на главную</a>
+  <div class="lang-switcher" aria-label="Выбор языка">
+    <button class="active" data-lang="ru">Рус</button>
+    <button data-lang="en">Eng</button>
+    <button data-lang="ko">한글</button>
   </div>
 
+  <h1 data-lang-ru="Словарь — 100 основных корейских слов"
+      data-lang-en="Dictionary — 100 Basic Korean Words"
+      data-lang-ko="사전 — 100개의 기본 한국어 단어">Словарь — 100 основных корейских слов</h1>
+
+  <table aria-label="Словарь">
+    <thead>
+      <tr>
+        <th data-lang-ru="Корейский" data-lang-en="Korean" data-lang-ko="한국어">Корейский</th>
+        <th data-lang-ru="Русский" data-lang-en="Russian" data-lang-ko="러시아어">Русский</th>
+        <th data-lang-ru="Английский" data-lang-en="English" data-lang-ko="영어">Английский</th>
+      </tr>
+    </thead>
+    <tbody id="dictionary-body">
+      <!-- Слова вставятся здесь скриптом -->
+    </tbody>
+  </table>
+
   <script>
-    function setLanguage(lang) {
-      document.documentElement.lang = lang;
+    const dictionary = [
+      { ko: "안녕하세요", ru: "Здравствуйте", en: "Hello" },
+      { ko: "감사합니다", ru: "Спасибо", en: "Thank you" },
+      { ko: "사랑", ru: "Любовь", en: "Love" },
+      { ko: "행복", ru: "Счастье", en: "Happiness" },
+      { ko: "친구", ru: "Друг", en: "Friend" },
+      { ko: "가족", ru: "Семья", en: "Family" },
+      { ko: "음식", ru: "Еда", en: "Food" },
+      { ko: "물", ru: "Вода", en: "Water" },
+      { ko: "집", ru: "Дом", en: "House" },
+      { ko: "학교", ru: "Школа", en: "School" },
+      { ko: "책", ru: "Книга", en: "Book" },
+      { ko: "시간", ru: "Время", en: "Time" },
+      { ko: "사람", ru: "Человек", en: "Person" },
+      { ko: "날씨", ru: "Погода", en: "Weather" },
+      { ko: "여행", ru: "Путешествие", en: "Travel" },
+      { ko: "컴퓨터", ru: "Компьютер", en: "Computer" },
+      { ko: "음악", ru: "Музыка", en: "Music" },
+      { ko: "영화", ru: "Фильм", en: "Movie" },
+      { ko: "운동", ru: "Спорт", en: "Exercise" },
+      { ko: "사과", ru: "Яблоко", en: "Apple" },
+      { ko: "커피", ru: "Кофе", en: "Coffee" },
+      { ko: "차", ru: "Чай", en: "Tea" },
+      { ko: "강아지", ru: "Щенок", en: "Puppy" },
+      { ko: "고양이", ru: "Кошка", en: "Cat" },
+      { ko: "산", ru: "Гора", en: "Mountain" },
+      { ko: "바다", ru: "Море", en: "Sea" },
+      { ko: "노래", ru: "Песня", en: "Song" },
+      { ko: "운전", ru: "Вождение", en: "Driving" },
+      { ko: "의사", ru: "Доктор", en: "Doctor" },
+      { ko: "경찰", ru: "Полиция", en: "Police" },
+      { ko: "시장", ru: "Рынок", en: "Market" },
+      { ko: "전화", ru: "Телефон", en: "Phone" },
+      { ko: "도서관", ru: "Библиотека", en: "Library" },
+      { ko: "버스", ru: "Автобус", en: "Bus" },
+      { ko: "기차", ru: "Поезд", en: "Train" },
+      { ko: "비행기", ru: "Самолет", en: "Airplane" },
+      { ko: "음료수", ru: "Напиток", en: "Drink" },
+      { ko: "가게", ru: "Магазин", en: "Store" },
+      { ko: "영어", ru: "Английский язык", en: "English language" },
+      { ko: "한국어", ru: "Корейский язык", en: "Korean language" },
+      { ko: "공부", ru: "Учеба", en: "Study" },
+      { ko: "선생님", ru: "Учитель", en: "Teacher" },
+      { ko: "학생", ru: "Студент", en: "Student" },
+      { ko: "사무실", ru: "Офис", en: "Office" },
+      { ko: "회사", ru: "Компания", en: "Company" },
+      { ko: "시장", ru: "Рынок", en: "Market" },
+      { ko: "돈", ru: "Деньги", en: "Money" },
+      { ko: "축구", ru: "Футбол", en: "Football" },
+      { ko: "농구", ru: "Баскетбол", en: "Basketball" },
+      { ko: "영화관", ru: "Кинотеатр", en: "Cinema" },
+      { ko: "음식점", ru: "Ресторан", en: "Restaurant" },
+      { ko: "아침", ru: "Утро", en: "Morning" },
+      { ko: "저녁", ru: "Вечер", en: "Evening" },
+      { ko: "밤", ru: "Ночь", en: "Night" },
+      { ko: "하늘", ru: "Небо", en: "Sky" },
+      { ko: "별", ru: "Звезда", en: "Star" },
+      { ko: "달", ru: "Луна", en: "Moon" },
+      { ko: "꽃", ru: "Цветок", en: "Flower" },
+      { ko: "나무", ru: "Дерево", en: "Tree" },
+      { ko: "바람", ru: "Ветер", en: "Wind" },
+      { ko: "비", ru: "Дождь", en: "Rain" },
+      { ko: "눈", ru: "Снег", en: "Snow" },
+      { ko: "친절", ru: "Доброта", en: "Kindness" },
+      { ko: "용기", ru: "Мужество", en: "Courage" },
+      { ko: "희망", ru: "Надежда", en: "Hope" },
+      { ko: "꿈", ru: "Мечта", en: "Dream" },
+      { ko: "자유", ru: "Свобода", en: "Freedom" },
+      { ko: "평화", ru: "Мир", en: "Peace" },
+      { ko: "미소", ru: "Улыбка", en: "Smile" },
+      { ko: "기쁨", ru: "Радость", en: "Joy" },
+      { ko: "슬픔", ru: "Грусть", en: "Sadness" },
+      { ko: "걱정", ru: "Беспокойство", en: "Worry" },
+      { ko: "사과", ru: "Извинение", en: "Apology" },
+      { ko: "감사", ru: "Благодарность", en: "Gratitude" },
+      { ko: "도움", ru: "Помощь", en: "Help" },
+      { ko: "행동", ru: "Действие", en: "Action" },
+      { ko: "생각", ru: "Мысль", en: "Thought" },
+      { ko: "말", ru: "Слово", en: "Word" },
+      { ko: "이해", ru: "Понимание", en: "Understanding" },
+      { ko: "소리", ru: "Звук", en: "Sound" },
+      { ko: "색", ru: "Цвет", en: "Color" },
+      { ko: "모양", ru: "Форма", en: "Shape" },
+      { ko: "맛", ru: "Вкус", en: "Taste" },
+      { ko: "냄새", ru: "Запах", en: "Smell" },
+      { ko: "감정", ru: "Эмоция", en: "Emotion" },
+      { ko: "몸", ru: "Тело", en: "Body" },
+      { ko: "마음", ru: "Душа", en: "Mind" },
+      { ko: "생명", ru: "Жизнь", en: "Life" },
+      { ko: "죽음", ru: "Смерть", en: "Death" },
+      { ko: "기억", ru: "Память", en: "Memory" },
+      { ko: "미래", ru: "Будущее", en: "Future" },
+      { ko: "과거", ru: "Прошлое", en: "Past" }
+    ];
 
-      // Заголовок страницы
-      const title = document.querySelector('title');
-      if (title && title.dataset[`lang${lang.toUpperCase()}`]) {
-        title.innerText = title.dataset[`lang${lang.toUpperCase()}`];
-      }
+    const tbody = document.getElementById('dictionary-body');
+    const langButtons = document.querySelectorAll('.lang-switcher button');
+    let currentLang = 'ru';
 
-      // Все элементы с data-lang-*
-      document.querySelectorAll('[data-lang-ru]').forEach(el => {
-        const text = el.dataset[`lang${lang.toUpperCase()}`];
-        if (text) el.innerText = text;
+    function renderDictionary() {
+      tbody.innerHTML = '';
+      dictionary.forEach(entry => {
+        const tr = document.createElement('tr');
+        const tdKo = document.createElement('td');
+        tdKo.setAttribute('data-label', getLangLabel('Корейский'));
+        tdKo.textContent = entry.ko;
+
+        const tdRu = document.createElement('td');
+        tdRu.setAttribute('data-label', getLangLabel('Русский'));
+        tdRu.textContent = entry[currentLang === 'ru' ? 'ru' : currentLang === 'en' ? 'en' : 'ru'];
+
+        // Чтобы на корейском показывать оригинал
+        if (currentLang === 'ko') {
+          tdRu.textContent = entry.ko;
+        }
+
+        const tdEn = document.createElement('td');
+        tdEn.setAttribute('data-label', getLangLabel('Английский'));
+        tdEn.textContent = entry.en;
+
+        // При переключении языка выделяем основной столбец переводом
+        // Но здесь просто показываем все три столбца
+
+        tr.appendChild(tdKo);
+        tr.appendChild(tdRu);
+        tr.appendChild(tdEn);
+
+        tbody.appendChild(tr);
       });
     }
+
+    function getLangLabel(word) {
+      const labels = {
+        'ru': {
+          'Корейский': 'Корейский',
+          'Русский': 'Русский',
+          'Английский': 'Английский',
+        },
+        'en': {
+          'Корейский': 'Korean',
+          'Русский': 'Russian',
+          'Английский': 'English',
+        },
+        'ko': {
+          'Корейский': '한국어',
+          'Русский': '러시아어',
+          'Английский': '영어',
+        }
+      };
+      return labels[currentLang][word];
+    }
+
+    langButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        currentLang = button.getAttribute('data-lang');
+        langButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        updateLanguageTexts();
+        renderDictionary();
+      });
+    });
+
+    function updateLanguageTexts() {
+      document.querySelector('h1').textContent = {
+        ru: "Словарь — 100 основных корейских слов",
+        en: "Dictionary — 100 Basic Korean Words",
+        ko: "사전 — 100개의 기본 한국어 단어"
+      }[currentLang];
+
+      // Обновить заголовки таблицы
+      const ths = document.querySelectorAll('thead th');
+      ths[0].textContent = getLangLabel('Корейский');
+      ths[1].textContent = getLangLabel('Русский');
+      ths[2].textContent = getLangLabel('Английский');
+    }
+
+    // Инициализация
+    updateLanguageTexts();
+    renderDictionary();
   </script>
 </body>
 </html>
