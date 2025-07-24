@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    /* Твой CSS без изменений */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -25,12 +24,31 @@
       background: url('images/bgrd.jpg') center center / cover;
       overflow-x: hidden;
     }
-    /* ... остальной CSS ... */
+
+    /* Кнопка выхода */
+    #logout-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px 15px;
+      background: #764ba2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      z-index: 100;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    #logout-btn:hover {
+      background-color: #5a3785;
+    }
 
     .lang-switcher {
       position: absolute;
       top: 20px;
-      right: 20px;
+      right: 80px; /* Отступ слева от кнопки выхода */
       display: flex;
       gap: 15px;
       z-index: 10;
@@ -73,7 +91,76 @@
       }
     }
 
-    /* Кнопки */
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    p.description {
+      font-size: 1.3rem;
+      margin-bottom: 40px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .features {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 50px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .feature-item {
+      flex: 1 1 180px;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      color: #fff;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: var(--delay, 0s);
+    }
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .feature-icon {
+      font-family: 'Material Icons';
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .feature-text {
+      font-size: 1rem;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 1.2s;
+    }
+
     .btn {
       background-color: rgba(255, 255, 255, 0.2);
       border: 2px solid #fff;
@@ -86,8 +173,6 @@
       text-decoration: none;
       user-select: none;
       min-width: 150px;
-      display: inline-block;
-      margin: 0 10px;
     }
 
     .btn:hover {
@@ -95,87 +180,34 @@
       color: #764ba2;
       border-color: #764ba2;
     }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+
+      .feature-item {
+        flex: 1 1 100%;
+        --delay: 0s !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        min-width: 100%;
+      }
+
+      .buttons {
+        flex-direction: row-reverse;
+        gap: 15px;
+      }
+    }
   </style>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
-      authDomain: "ska-language.firebaseapp.com",
-      projectId: "ska-language",
-      storageBucket: "ska-language.firebasestorage.app",
-      messagingSenderId: "443927736897",
-      appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
-      measurementId: "G-DDXFT9VQ9C"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    // Функция для блокировки кнопок доступа
-    function blockAccess(button) {
-      if(button) {
-        button.style.pointerEvents = 'none';
-        button.style.opacity = '0.5';
-        button.title = "Доступ закрыт. Ожидайте одобрения администратора.";
-      }
-    }
-    // Функция для разблокировки
-    function unblockAccess(button) {
-      if(button) {
-        button.style.pointerEvents = 'auto';
-        button.style.opacity = '1';
-        button.title = "";
-      }
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        // Если не авторизован — редирект на auth.html
-        window.location.href = "auth.html";
-      } else {
-        console.log("Пользователь вошёл:", user.email);
-
-        // Кнопки
-        const btnLessons = document.querySelector('a[href="lessons/uroki.html"]');
-        const btnTests = document.querySelector('a[href="tests.html"]');
-        const btnDict = document.querySelector('a[href="about.html"]'); // Заменить, если словарь в другом месте
-
-        // Получаем данные пользователя из Firestore
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-          alert("Данные пользователя не найдены. Выход...");
-          await signOut(auth);
-          window.location.href = "auth.html";
-          return;
-        }
-
-        const userData = docSnap.data();
-        const allowedLessons = userData.allowedLessons || [];
-
-        if (allowedLessons.length === 0) {
-          // Нет доступа — блокируем кнопки
-          blockAccess(btnLessons);
-          blockAccess(btnTests);
-          blockAccess(btnDict);
-          alert("У вас пока нет доступа к урокам, тестам и словарю. Пожалуйста, дождитесь одобрения администратора.");
-        } else {
-          // Есть доступ — разблокируем кнопки
-          unblockAccess(btnLessons);
-          unblockAccess(btnTests);
-          unblockAccess(btnDict);
-        }
-      }
-    });
-  </script>
 </head>
 <body>
+  <!-- Кнопка выхода -->
+  <button id="logout-btn">Выйти</button>
+
   <!-- Переключатель языков -->
   <div class="lang-switcher" aria-label="Выбор языка">
     <button class="active" data-lang="ru">Рус</button>
@@ -195,6 +227,30 @@
       Добро пожаловать в SKA — ваш надежный помощник в изучении корейского языка. Уроки, тесты, словарь и многое другое.
     </p>
 
+    <div class="features">
+      <div class="feature-item" style="--delay: 0s;">
+        <div class="feature-icon" aria-hidden="true">menu_book</div>
+        <div class="feature-title" data-lang-ru="Полные уроки" data-lang-en="Complete Lessons" data-lang-ko="완전한 수업">Полные уроки</div>
+        <div class="feature-text" data-lang-ru="Изучайте корейский язык с подробными уроками от новичка до продвинутого."
+             data-lang-en="Learn Korean with detailed lessons from beginner to advanced."
+             data-lang-ko="초보자부터 고급까지 자세한 수업으로 한국어를 배우세요.">Изучайте корейский язык с подробными уроками от новичка до продвинутого.</div>
+      </div>
+      <div class="feature-item" style="--delay: 0.3s;">
+        <div class="feature-icon" aria-hidden="true">assignment</div>
+        <div class="feature-title" data-lang-ru="Тесты и практика" data-lang-en="Tests and Practice" data-lang-ko="테스트와 연습">Тесты и практика</div>
+        <div class="feature-text" data-lang-ru="Проверяйте свои знания с помощью интерактивных тестов."
+             data-lang-en="Check your knowledge with interactive tests."
+             data-lang-ko="인터랙티브 테스트로 지식을 점검하세요.">Проверяйте свои знания с помощью интерактивных тестов.</div>
+      </div>
+      <div class="feature-item" style="--delay: 0.6s;">
+        <div class="feature-icon" aria-hidden="true">menu_book</div>
+        <div class="feature-title" data-lang-ru="Словарь" data-lang-en="Dictionary" data-lang-ko="사전">Словарь</div>
+        <div class="feature-text" data-lang-ru="Удобный словарь с поиском и примерами."
+             data-lang-en="Convenient dictionary with search and examples."
+             data-lang-ko="검색 및 예제가 포함된 편리한 사전입니다.">Удобный словарь с поиском и примерами.</div>
+      </div>
+    </div>
+
     <div class="buttons">
       <a href="lessons/uroki.html" class="btn" data-lang-ru="Начать уроки" data-lang-en="Start Lessons" data-lang-ko="수업 시작">Начать уроки</a>
       <a href="tests.html" class="btn" data-lang-ru="Посмотреть тесты" data-lang-en="View Tests" data-lang-ko="테스트 보기">Посмотреть тесты</a>
@@ -202,14 +258,49 @@
     </div>
   </div>
 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCgqLLQFVj27K-_2ClfXbIAnNcfx8m4TF8",
+      authDomain: "ska-language.firebaseapp.com",
+      projectId: "ska-language",
+      storageBucket: "ska-language.firebasestorage.app",
+      messagingSenderId: "443927736897",
+      appId: "1:443927736897:web:14abd3a4da7ce1c4778cc0",
+      measurementId: "G-DDXFT9VQ9C"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Проверка авторизации при загрузке страницы
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // Не авторизован — перенаправляем на страницу входа
+        window.location.href = "auth.html";
+      }
+    });
+
+    // Кнопка выхода
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = "auth.html";
+    });
+  </script>
+
   <script>
+    // Локализация — переключение языков
     const langButtons = document.querySelectorAll('.lang-switcher button');
     const elementsToTranslate = document.querySelectorAll('[data-lang-ru]');
 
     function setLanguage(lang) {
       elementsToTranslate.forEach(el => {
         const text = el.getAttribute(`data-lang-${lang}`);
-        if (text) el.textContent = text;
+        if (text) {
+          el.textContent = text;
+        }
       });
       langButtons.forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
@@ -219,10 +310,12 @@
 
     langButtons.forEach(button => {
       button.addEventListener('click', () => {
-        setLanguage(button.getAttribute('data-lang'));
+        const selectedLang = button.getAttribute('data-lang');
+        setLanguage(selectedLang);
       });
     });
 
+    // Загружаем язык из localStorage или по умолчанию русский
     const savedLang = localStorage.getItem('siteLanguage') || 'ru';
     setLanguage(savedLang);
   </script>
